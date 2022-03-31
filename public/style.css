@@ -1,4 +1,19 @@
 body {
     background: rgb(255, 255, 255);
     margin: 0;
+    overflow-x: hidden;
+}
+
+nav {
+    background: rgb(236, 236, 236);
+    width: 100vw;
+    height: 50px;
+    box-shadow: 0px 0px 23px -2px rgba(0,0,0,0.75);
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+#viewerContainer {
+    position: absolute;
 }

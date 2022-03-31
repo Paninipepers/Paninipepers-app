@@ -2,6 +2,7 @@
   "name": "schoolkrant",
   "version": "1.0.0",
   "description": "App voor de schoolkrant van het adelbert",
+  "main": "src/index.ts",
   "scripts": {
     "build": "webpack build",
     "dev": "webpack serve",
