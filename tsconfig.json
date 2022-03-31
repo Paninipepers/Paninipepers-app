@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "target": "ES2015",
+        "lib": ["ESNext", "DOM"],
+        "rootDir": "./src/",
+        "outDir": "./dist/",
+        "moduleResolution": "Node",
+        "allowSyntheticDefaultImports": true,
+        "importsNotUsedAsValues": "error",
+        "resolveJsonModule": true
+    }
+}

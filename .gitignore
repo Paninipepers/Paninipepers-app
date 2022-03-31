@@ -1,0 +1,12 @@
+# Firebase cache
+.firebase/
+
+# Build output
+build/
+
+# Npm
+node_modules/
+package-lock.json
+
+# Test data
+krant/
