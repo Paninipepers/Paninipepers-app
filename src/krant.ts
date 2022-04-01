@@ -16,4 +16,8 @@ export class Krant {
     getUrl(): string {
         return this.url;
     }
+
+    getName(): string {
+        return this.name;
+    }
 }

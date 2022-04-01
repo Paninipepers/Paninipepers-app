@@ -12,6 +12,12 @@ nav {
     display: flex;
     align-items: center;
     margin-bottom: 25px;
+    padding-left: 10px;
+}
+
+nav select {
+    margin-left: 10px;
+    min-width: 70px;
 }
 
 #viewerContainer {

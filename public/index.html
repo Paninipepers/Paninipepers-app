@@ -5,11 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panini Papers</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <nav><span class="material-icons" style="vertical-align: bottom;">arrow_drop_down</span> Vorige uitgaves</nav>
+    <nav>
+      <label for="uitgaves">Uitgaves:</label>
+      <select name="uitgaves" id="uitgaves"></select>
+    </nav>
     <div id="viewerContainer">
       <div id="viewer" class="pdfViewer"></div>
     </div>

@@ -1,8 +1,8 @@
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { FirebaseStorage, getDownloadURL, getStorage, listAll, ref } from 'firebase/storage';
 import { Krant } from './krant';
-// import type { Database } from 'firebase/database';
 
+// TODO: zet deze in een config file
 const firebaseConfig = {
     apiKey: "AIzaSyCfT6IOjnRDE4WdscqkERG_MVJjnvodeYQ",
     authDomain: "adelbert-schoolkrant.firebaseapp.com",
@@ -16,7 +16,6 @@ const firebaseConfig = {
 export class Firebase {
     private app: FirebaseApp;
     private storage: FirebaseStorage;
-    // private database: Database; 
 
     constructor() {
         this.app = initializeApp(firebaseConfig);
@@ -29,7 +28,7 @@ export class Firebase {
 
         for (let item of result.items) {
             let url = await getDownloadURL(item);
-            let krant = new Krant(url, item.name.replace(".pdf", ""));
+            let krant = new Krant(url, item.name.toLowerCase().replace(".pdf", "")); // Haal de naam van de uitgave eruit door de .pdf/.PDF te verwijderen
 
             uitgaves.push(krant);
         }
