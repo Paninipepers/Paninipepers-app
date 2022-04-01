@@ -32,8 +32,6 @@ export class Viewer {
         this.krant.load().then(() => {
             this.viewer.setDocument(this.krant.pdfDocumentProxy);
             this.linkService.setDocument(this.krant);
-
-            // this.#krant.title.then(title => console.log(title));
         });
     }
 }
