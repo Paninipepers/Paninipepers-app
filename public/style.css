@@ -36,18 +36,19 @@ header .title {
     font-family: 'Nunito', sans-serif;
 }
 
-#viewerContainer {
-    position: absolute;
-    max-height: calc(100vh - 55px - 23px - 23px - 60px);
-    overflow-y: scroll;
-    /* overflow-x: hidden; */
-}
-
 #viewer {
+    position: absolute;
     width: 100vw;
+    max-height: calc(100vh - 55px - 23px - 23px - 60px);
+    overflow: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+canvas {
+    width: 100%;
+    max-width: 1200px;
 }
 
 footer {
