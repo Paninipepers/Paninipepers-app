@@ -6,7 +6,8 @@ module.exports = {
     devtool: 'inline-source-map',
     entry: {
         app: './src/index.ts',
-        'pdf.worker': 'pdfjs-dist/build/pdf.worker.entry'
+        'pdf.worker': 'pdfjs-dist/build/pdf.worker.entry',
+        serviceworker: './src/serviceworker.ts'
     },
     module: {
         rules: [

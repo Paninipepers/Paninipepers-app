@@ -41,4 +41,9 @@ window.addEventListener('load', () => {
         // TODO: kijk naar meeste recente uitgave eerst
         viewer.setKrant(uitgaves[0]);
     });
+
+    // Registreer de service worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/serviceworker.bundle.js');
+    }
 });
