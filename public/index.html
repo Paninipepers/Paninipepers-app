@@ -5,16 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>De Paninipepers</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
   </head>
   <body>
-    <nav>
-      <label for="uitgaves">Uitgaves:</label>
-      <select name="uitgaves" id="uitgaves"></select>
-    </nav>
+    <header>
+      <img src="/images/panipepers.jpeg" class="logo"/>
+      <h1 class="title">De Paninipepers</h1>
+    </header>
     <div id="viewerContainer">
       <div id="viewer" class="pdfViewer"></div>
     </div>
+    <footer id="dropup">
+      <div id="dropup-btn">
+        <span class="material-icons" id="icon">arrow_drop_up</span>
+        <h2 id="huidig">Onbekende naam</h2>
+      </div>
+      <div class="footer-content">
+        <div class="btn-separator"></div>
+        <ul id="uitgaves"></ul>
+      </div>
+    </footer>
   </body>
 </html>

@@ -1,14 +1,15 @@
 {
     "short_name": "paninipepers",
-    "name": "Adelbert Schoolkrant: De Paninipepers",
+    "name": "De Paninipepers",
+    "description": "Schoolkrant van het Adelbert College: De Paninipepers",
     "icons": [
         {
-            "src": "/images/panipepers icon - 192px.png",
+            "src": "/images/icon_x192.png",
             "type": "image/png",
             "sizes": "192x192"
         },
         {
-            "src": "/images/panipepers icon - 512px.png",
+            "src": "/images/icon_x512.png",
             "type": "image/png",
             "sizes": "512x512"
         }

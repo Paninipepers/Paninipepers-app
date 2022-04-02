@@ -1,6 +1,5 @@
 import * as pdfjsLib from "pdfjs-dist";
 import { Firebase } from "./firebase";
-import type { Krant } from "./krant";
 import { Viewer } from "./viewer";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = './dist/pdf.worker.bundle.js';
@@ -9,37 +8,33 @@ window.addEventListener('load', () => {
     let viewerContainer = <HTMLDivElement> document.getElementById("viewerContainer");
     let viewer = new Viewer(viewerContainer);
     let firebase = new Firebase();
-    let kranten: Krant[] = [];
 
-    // Events voor de select van de uitgaves
-    let select = <HTMLSelectElement> document.getElementById("uitgaves");
+    // Drop up events
+    let dropupBtn = document.getElementById("dropup-btn");
 
-    select.addEventListener('change', (event) => {
-        let uitgaveNaam = select.value;
-
-        // Zoek de krant met de juiste naam op in de array
-        for (let krant of kranten) {
-            if (krant.getName() === uitgaveNaam) {
-                viewer.setKrant(krant);
-                break;
-            }
-        }
-    });
+    dropupBtn.addEventListener('click', toggleDropup);
     
+    // Haal een lijst met uitgaves op
     firebase.getUitgaves().then(uitgaves => {
-        kranten = uitgaves;
+        // Vul de dropup met uitgaves
+        let uitgavesUl = document.getElementById("uitgaves");
 
-        // Vul de select met options
         uitgaves.forEach(uitgave => {
-            let option = document.createElement("option");
-            option.value = uitgave.getName();
-            option.innerText = uitgave.getName();
-            select.appendChild(option);
+            let li = document.createElement("li");
+            li.innerHTML = uitgave.getName();
+            li.addEventListener('click', () => {
+                viewer.setKrant(uitgave);
+                setHuidigeTitel(uitgave.getName());
+                toggleDropup();
+            });
+
+            uitgavesUl.appendChild(li);
         });
 
         // Laad de eerste krant
         // TODO: kijk naar meeste recente uitgave eerst
         viewer.setKrant(uitgaves[0]);
+        setHuidigeTitel(uitgaves[0].getName());
     });
 
     // Registreer de service worker
@@ -47,3 +42,14 @@ window.addEventListener('load', () => {
         navigator.serviceWorker.register('/serviceworker.bundle.js');
     }
 });
+
+function toggleDropup() {
+    let dropup = document.getElementById("dropup");
+
+    dropup.classList.toggle("opened");
+    document.getElementById("icon").innerHTML = dropup.classList.contains("opened") ? "arrow_drop_down" : "arrow_drop_up";
+}
+
+function setHuidigeTitel(titel: string) {
+    document.getElementById("huidig").innerHTML = titel;
+}
