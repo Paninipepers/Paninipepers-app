@@ -1,4 +1,4 @@
-const version = "1.0.0";
+const version = "1.0.1";
 const cacheName =  `paninipepers-cache-v${version}`;
 const assets = [
     '/index.html',
@@ -45,10 +45,11 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-    // Vraag de cache op, haal anders de request op van de server en voeg deze toe aan de cache
+    // Vraag de cache op, haal anders de request op van de server en voeg deze toe aan de cache als het een pdf is
     event.respondWith(caches.match(event.request).then(response => {
         return response || fetch(event.request).then(res => {
-            return caches.open(cacheName).then(cache => {
+            if (res.headers.get("content-type") !== "application/pdf") return res;
+            else return caches.open(cacheName).then(cache => {
                 cache.put(event.request, res.clone());
                 return res;
             });
