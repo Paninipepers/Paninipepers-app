@@ -2,16 +2,14 @@ import { FirebaseApp, initializeApp } from 'firebase/app';
 import { FirebaseStorage, getDownloadURL, getStorage, listAll, ref } from 'firebase/storage';
 import { Krant } from './krant';
 
-// TODO: zet deze in een config file
 const firebaseConfig = {
-    apiKey: "AIzaSyCfT6IOjnRDE4WdscqkERG_MVJjnvodeYQ",
-    authDomain: "adelbert-schoolkrant.firebaseapp.com",
-    databaseURL: "https://adelbert-schoolkrant-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "adelbert-schoolkrant",
-    storageBucket: "adelbert-schoolkrant.appspot.com",
-    messagingSenderId: "106669703164",
-    appId: "1:106669703164:web:22c84682f9831ed5f43c79"
-};
+    apiKey: "AIzaSyC36ZvdiHsslbnFk6tp8MzKSDh8A3t1ZLU",
+    authDomain: "paninipepers.firebaseapp.com",
+    projectId: "paninipepers",
+    storageBucket: "paninipepers.appspot.com",
+    messagingSenderId: "41628347356",
+    appId: "1:41628347356:web:3b19baa0c9c7c35fde7d19"
+  };
 
 export class Firebase {
     private app: FirebaseApp;
