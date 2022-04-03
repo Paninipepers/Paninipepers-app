@@ -2,6 +2,11 @@ import * as pdfjsLib from "pdfjs-dist";
 import { Firebase } from "./firebase";
 import { Viewer } from "./viewer";
 
+// Registreer de service worker
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/serviceworker.js');
+}
+
 pdfjsLib.GlobalWorkerOptions.workerSrc = './dist/pdf.worker.bundle.js';
 
 window.addEventListener('load', () => {
@@ -36,11 +41,6 @@ window.addEventListener('load', () => {
         viewer.setKrant(uitgaves[0]);
         setHuidigeTitel(uitgaves[0].getName());
     });
-
-    // Registreer de service worker
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/serviceworker.bundle.js');
-    }
 });
 
 function toggleDropup() {

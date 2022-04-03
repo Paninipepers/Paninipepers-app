@@ -4,12 +4,13 @@
   "description": "App voor de schoolkrant van het adelbert",
   "main": "src/index.ts",
   "scripts": {
-    "build": "webpack build",
-    "dev": "webpack serve",
+    "build": "webpack build --mode=production",
+    "dev": "webpack serve --mode=development",
     "deploy:hosting": "firebase deploy --only hosting",
     "deploy": "firebase deploy"
   },
   "devDependencies": {
+    "copy-webpack-plugin": "^10.2.4",
     "html-webpack-plugin": "^5.5.0",
     "ts-loader": "^9.2.8",
     "typescript": "^4.6.3",
