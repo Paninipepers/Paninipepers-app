@@ -48,6 +48,20 @@ window.addEventListener('load', () => {
             uitgavesUl.appendChild(li);
         });
 
+        // Zet de huidige titel naar "geen krant gevonden" als de array leeg is
+        if (uitgaves.length === 0) {
+            setHuidigeTitel("Geen krant gevonden");
+        }
+
+        // Voeg een placeholder toe als er maar 1 uitgave is en de dropup dus leeg is
+        if (uitgaves.length === 1) {
+            let li = document.createElement("li");
+            li.id = "placeholder";
+            li.innerHTML = "Er zijn nog eerdere uitgaves, wanneer die er wel zijn komen ze hier te staan.";
+
+            uitgavesUl.appendChild(li);
+        }
+
         // Laad de eerste krant
         // TODO: kijk naar meeste recente uitgave eerst
         setCurrentKrant(uitgaves[0]);
