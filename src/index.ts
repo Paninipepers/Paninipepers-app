@@ -2,7 +2,7 @@ import * as pdfjsLib from "pdfjs-dist";
 import { Firebase } from "./firebase";
 import { Viewer } from "./viewer";
 
-// Registreer de service worker (alleen in niet in development)
+// Registreer de service worker (alleen niet in development)
 if ('serviceWorker' in navigator && location.hostname !== "localhost") {
     navigator.serviceWorker.register('/serviceworker.js');
 }
@@ -23,6 +23,10 @@ window.addEventListener('load', () => {
     document.getElementById("close-error").addEventListener('click', toggleError);
     document.getElementById("more-info").addEventListener('click', () => {
         document.getElementById("error-details").classList.add("show");
+    });
+
+    window.addEventListener("resize", () => {
+        checkBars();
     });
 
     // Haal een lijst met uitgaves op
@@ -46,6 +50,7 @@ window.addEventListener('load', () => {
         // TODO: kijk naar meeste recente uitgave eerst
         viewer.setKrant(uitgaves[0]);
         setHuidigeTitel(uitgaves[0].getName());
+        checkBars();
     }).catch(error => {
         setError(error);
         toggleError();
@@ -77,4 +82,16 @@ export function setError(error: Error) {
     let errorDetails = document.getElementById("error-details");
 
     errorDetails.innerHTML = `<h3>${error.message}</h3>\n<p>${error.stack}</p>`;
+}
+
+function checkBars() {
+    if (innerHeight < 400 && innerHeight < innerWidth) {
+        document.querySelector("header").style.display = 'none';
+        document.querySelector("footer").style.display = 'none';
+        document.getElementById("viewer").style.maxHeight = '100vh';
+    } else {
+        document.querySelector("header").style.display = 'flex';
+        document.querySelector("footer").style.display = 'flex';
+        document.getElementById("viewer").style.maxHeight = 'calc(100vh - 55px - 23px - 23px - 60px)';
+    }
 }
