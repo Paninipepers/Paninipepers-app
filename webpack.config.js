@@ -27,7 +27,7 @@ module.exports = (env, argv) => {
                         from: 'public',
                         to: './[path][name][ext]',
                         globOptions: {
-                            ignore: ['**/*.html']
+                            ignore: ['**/index.html']
                         }
                     }
                 ]
