@@ -1,5 +1,6 @@
 import * as pdfjsLib from "pdfjs-dist";
 import { Firebase } from "./firebase";
+import type { Krant } from "./krant";
 import { Viewer } from "./viewer";
 
 // Registreer de service worker (alleen niet in development)
@@ -13,7 +14,8 @@ window.addEventListener('load', () => {
     let viewerContainer = <HTMLDivElement> document.getElementById("viewer");
     let viewer = new Viewer(viewerContainer);
     let firebase = new Firebase();
-
+    let currentKrant: Krant = null;
+    
     // Drop up events
     let dropupBtn = document.getElementById("dropup-btn");
 
@@ -36,10 +38,10 @@ window.addEventListener('load', () => {
 
         uitgaves.forEach(uitgave => {
             let li = document.createElement("li");
+            li.id = uitgave.getName();
             li.innerHTML = uitgave.getName();
             li.addEventListener('click', () => {
-                viewer.setKrant(uitgave);
-                setHuidigeTitel(uitgave.getName());
+                setCurrentKrant(uitgave);
                 toggleDropup();
             });
 
@@ -48,25 +50,48 @@ window.addEventListener('load', () => {
 
         // Laad de eerste krant
         // TODO: kijk naar meeste recente uitgave eerst
-        viewer.setKrant(uitgaves[0]);
-        setHuidigeTitel(uitgaves[0].getName());
+        setCurrentKrant(uitgaves[0]);
         checkBars();
     }).catch(error => {
         setError(error);
         toggleError();
     });
+    
+    // Handige functies
+    function toggleDropup() {
+        let dropup = document.getElementById("dropup");
+    
+        dropup.classList.toggle("opened");
+        document.getElementById("icon").innerHTML = dropup.classList.contains("opened") ? "arrow_drop_down" : "arrow_drop_up";
+    }
+    
+    function setHuidigeTitel(titel: string) {
+        document.getElementById("huidig").innerHTML = titel;
+    }
+
+    function checkBars() {
+        if (innerHeight < 400 && innerHeight < innerWidth) {
+            document.querySelector("header").style.display = 'none';
+            document.querySelector("footer").style.display = 'none';
+            document.getElementById("viewer").style.maxHeight = '100vh';
+        } else {
+            document.querySelector("header").style.display = 'flex';
+            document.querySelector("footer").style.display = 'flex';
+            document.getElementById("viewer").style.maxHeight = 'calc(100vh - 55px - 23px - 23px - 60px)';
+        }
+    }
+    
+    function setCurrentKrant(krant: Krant) {
+        if (currentKrant) document.getElementById(currentKrant.getName()).style.display = '';
+
+        currentKrant = krant;
+    
+        viewer.setKrant(krant);
+        setHuidigeTitel(krant.getName());
+        document.getElementById(currentKrant.getName()).style.display = 'none';
+    }
 });
 
-function toggleDropup() {
-    let dropup = document.getElementById("dropup");
-
-    dropup.classList.toggle("opened");
-    document.getElementById("icon").innerHTML = dropup.classList.contains("opened") ? "arrow_drop_down" : "arrow_drop_up";
-}
-
-function setHuidigeTitel(titel: string) {
-    document.getElementById("huidig").innerHTML = titel;
-}
 
 export function toggleError() {
     let errorInfo = document.getElementById("error-info");
@@ -82,16 +107,4 @@ export function setError(error: Error) {
     let errorDetails = document.getElementById("error-details");
 
     errorDetails.innerHTML = `<h3>${error.message}</h3>\n<p>${error.stack}</p>`;
-}
-
-function checkBars() {
-    if (innerHeight < 400 && innerHeight < innerWidth) {
-        document.querySelector("header").style.display = 'none';
-        document.querySelector("footer").style.display = 'none';
-        document.getElementById("viewer").style.maxHeight = '100vh';
-    } else {
-        document.querySelector("header").style.display = 'flex';
-        document.querySelector("footer").style.display = 'flex';
-        document.getElementById("viewer").style.maxHeight = 'calc(100vh - 55px - 23px - 23px - 60px)';
-    }
 }

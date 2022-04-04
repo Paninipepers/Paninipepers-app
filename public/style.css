@@ -130,15 +130,12 @@ footer.opened .footer-content {
     padding-top: 10px;
     cursor: pointer;
     color: white;
+    padding-bottom: 10px;
+    border-bottom: 2px solid white;
 }
 
 .footer-content ul li:active {
     color: #F59A00;
-}
-
-.footer-content ul li:not(:last-child) {
-    padding-bottom: 10px;
-    border-bottom: 2px solid white;
 }
 
 #error-info {
