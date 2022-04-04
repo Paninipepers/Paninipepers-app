@@ -1,3 +1,4 @@
+import { setError, toggleError } from ".";
 import type { Krant } from "./krant";
 
 export class Viewer {
@@ -24,8 +25,14 @@ export class Viewer {
                 canvas.width = (innerWidth > innerHeight ? innerWidth : innerHeight) * 0.95; // 95% van de langste zijde van de window
 
                 this.container.appendChild(canvas); // Voeg canvas toe aan de viewer
-                this.krant.render(i, <CanvasRenderingContext2D> canvas.getContext("2d"), this.scale); // Render de pagina
+                this.krant.render(i, <CanvasRenderingContext2D> canvas.getContext("2d"), this.scale).catch(error => {
+                    setError(new Error(error));
+                    toggleError();
+                });; // Render de pagina
             }
+        }).catch(error => {
+            setError(error);
+            toggleError();
         });
     }
 

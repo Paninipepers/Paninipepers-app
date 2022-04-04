@@ -19,6 +19,12 @@ window.addEventListener('load', () => {
 
     dropupBtn.addEventListener('click', toggleDropup);
     
+    // Error info events
+    document.getElementById("close-error").addEventListener('click', toggleError);
+    document.getElementById("more-info").addEventListener('click', () => {
+        document.getElementById("error-details").classList.add("show");
+    });
+
     // Haal een lijst met uitgaves op
     firebase.getUitgaves().then(uitgaves => {
         // Vul de dropup met uitgaves
@@ -40,6 +46,9 @@ window.addEventListener('load', () => {
         // TODO: kijk naar meeste recente uitgave eerst
         viewer.setKrant(uitgaves[0]);
         setHuidigeTitel(uitgaves[0].getName());
+    }).catch(error => {
+        setError(error);
+        toggleError();
     });
 });
 
@@ -52,4 +61,20 @@ function toggleDropup() {
 
 function setHuidigeTitel(titel: string) {
     document.getElementById("huidig").innerHTML = titel;
+}
+
+export function toggleError() {
+    let errorInfo = document.getElementById("error-info");
+
+    errorInfo.hidden = !errorInfo.hidden;
+
+    if (errorInfo.hidden) {
+        document.getElementById("error-details").classList.remove("show");
+    }
+}
+
+export function setError(error: Error) {
+    let errorDetails = document.getElementById("error-details");
+
+    errorDetails.innerHTML = `<h3>${error.message}</h3>\n<p>${error.stack}</p>`;
 }

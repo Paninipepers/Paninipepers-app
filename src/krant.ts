@@ -17,7 +17,7 @@ export class Krant {
 
         target.canvas.height = scaledViewport.height;
 
-        page.render({
+        return page.render({
             canvasContext: target,
             viewport: scaledViewport
         });
