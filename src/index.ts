@@ -2,8 +2,8 @@ import * as pdfjsLib from "pdfjs-dist";
 import { Firebase } from "./firebase";
 import { Viewer } from "./viewer";
 
-// Registreer de service worker
-if ('serviceWorker' in navigator) {
+// Registreer de service worker (alleen in niet in development)
+if ('serviceWorker' in navigator && location.hostname !== "localhost") {
     navigator.serviceWorker.register('/serviceworker.js');
 }
 
