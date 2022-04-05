@@ -12,6 +12,7 @@ export class Viewer {
     setKrant(krant: Krant) {
         if (this.krant) {
             this.container.innerHTML = "";
+            document.getElementById("spinner").classList.remove("hidden");
         }
 
         this.krant = krant;
@@ -25,7 +26,9 @@ export class Viewer {
                 canvas.width = (innerWidth > innerHeight ? innerWidth : innerHeight) * 0.95; // 95% van de langste zijde van de window
 
                 this.container.appendChild(canvas); // Voeg canvas toe aan de viewer
-                this.krant.render(i, <CanvasRenderingContext2D> canvas.getContext("2d"), this.scale).catch(error => {
+                this.krant.render(i, <CanvasRenderingContext2D> canvas.getContext("2d"), this.scale).then(() => {
+                    document.getElementById("spinner").classList.add("hidden");
+                }).catch(error => {
                     setError(new Error(error));
                     toggleError();
                 });; // Render de pagina
