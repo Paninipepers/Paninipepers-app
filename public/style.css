@@ -49,7 +49,7 @@ header .title {
 #spinner {
     position: fixed;
     display: inline-block;
-    top: 50%;
+    top: 25%;
     left: 50%;
     width: 60px;
     height: 60px;
@@ -229,6 +229,7 @@ footer.opened .footer-content {
     margin-top: 10px;
     border: 2px solid black;
     padding: 5px;
+    word-wrap: break-word;
     visibility: hidden;
 }
 
