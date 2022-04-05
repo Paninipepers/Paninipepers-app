@@ -6,11 +6,18 @@ import { Viewer } from "./viewer";
 // Registreer de service worker (alleen niet in development)
 if ('serviceWorker' in navigator && location.hostname !== "localhost") {
     navigator.serviceWorker.register('/serviceworker.js');
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+        document.getElementById('update-info').classList.remove('hidden');
+        setTimeout(() => {
+            window.location.reload()
+        }, 5000);
+    });
 }
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = './dist/pdf.worker.bundle.js';
 
 window.addEventListener('load', () => {
+    // App setup
     let viewerContainer = <HTMLDivElement> document.getElementById("viewer");
     let viewer = new Viewer(viewerContainer);
     let firebase = new Firebase();

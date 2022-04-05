@@ -1,4 +1,4 @@
-const version = "1.2.2";
+const version = "1.2.4";
 const cacheName =  `paninipepers-cache-v${version}`;
 const assets = [
     '/index.html',
@@ -31,7 +31,7 @@ self.addEventListener('install', event => {
             }),
             // Doe de CORS request 'normaal'
             cache.addAll(staticAssets)
-        ]);
+        ]).then(() => self.skipWaiting());
     }));
 });
 
