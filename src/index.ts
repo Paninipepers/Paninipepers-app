@@ -64,7 +64,7 @@ window.addEventListener('load', () => {
         if (uitgaves.length === 1) {
             let li = document.createElement("li");
             li.id = "placeholder";
-            li.innerHTML = "Er zijn nog eerdere uitgaves, wanneer die er wel zijn komen ze hier te staan.";
+            li.innerHTML = "Er zijn nog geen eerdere uitgaves, wanneer die er wel zijn komen ze hier te staan.";
 
             uitgavesUl.appendChild(li);
         }

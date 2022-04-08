@@ -6,7 +6,8 @@ module.exports = (env, argv) => {
     let config = {
         entry: {
             app: './src/index.ts',
-            'pdf.worker': 'pdfjs-dist/build/pdf.worker.entry'
+            'pdf.worker': 'pdfjs-dist/build/pdf.worker.entry',
+            instructies: './src/instructies.ts'
         },
         module: {
             rules: [
@@ -19,7 +20,14 @@ module.exports = (env, argv) => {
         },
         plugins: [
             new HtmlWebpackPlugin({
-                template: './public/index.html'
+                template: './public/index.html',
+                chunks: ['app', 'pdf.worker'],
+                filename: 'index.html'
+            }),
+            new HtmlWebpackPlugin({
+                template: './public/instructies.html',
+                chunks: ['instructies'],
+                filename: 'instructies.html'
             }),
             new CopyWebpackPlugin({
                 patterns: [
@@ -27,7 +35,10 @@ module.exports = (env, argv) => {
                         from: 'public',
                         to: './[path][name][ext]',
                         globOptions: {
-                            ignore: ['**/index.html']
+                            ignore: [
+                                '**/index.html',
+                                '**/instructies.html'
+                            ]
                         }
                     }
                 ]
