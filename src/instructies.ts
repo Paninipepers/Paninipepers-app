@@ -28,6 +28,8 @@ window.addEventListener('load', () => {
 });
 
 function selectInstructies(os: InstructieOS) {
+    if (huidigOs === os) return;
+
     let instructies = document.getElementById(os);
     let huidig = document.getElementById(huidigOs);
     
