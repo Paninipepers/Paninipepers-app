@@ -22,7 +22,7 @@ export class Viewer {
             for(let i = 1; i <= pages; i++) {
                 let canvas = document.createElement("canvas");
 
-                canvas.id = `${this.krant.getName()}-page-${i}`;
+                canvas.id = `${this.krant.name}-page-${i}`;
                 canvas.width = (innerWidth > innerHeight ? innerWidth : innerHeight) * 0.95; // 95% van de langste zijde van de window
 
                 this.container.appendChild(canvas); // Voeg canvas toe aan de viewer

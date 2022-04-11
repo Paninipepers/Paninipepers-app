@@ -45,8 +45,8 @@ window.addEventListener('load', () => {
 
         uitgaves.forEach(uitgave => {
             let li = document.createElement("li");
-            li.id = uitgave.getName();
-            li.innerHTML = uitgave.getName();
+            li.id = uitgave.name;
+            li.innerHTML = uitgave.name;
             li.addEventListener('click', () => {
                 setCurrentKrant(uitgave);
                 toggleDropup();
@@ -103,13 +103,13 @@ window.addEventListener('load', () => {
     }
     
     function setCurrentKrant(krant: Krant) {
-        if (currentKrant) document.getElementById(currentKrant.getName()).style.display = '';
+        if (currentKrant) document.getElementById(currentKrant.name).style.display = '';
 
         currentKrant = krant;
     
         viewer.setKrant(krant);
-        setHuidigeTitel(krant.getName());
-        document.getElementById(currentKrant.getName()).style.display = 'none';
+        setHuidigeTitel(krant.name);
+        document.getElementById(currentKrant.name).style.display = 'none';
     }
 });
 

@@ -115,7 +115,7 @@ window.addEventListener('load', () => {
                     deleteBtn.disabled = true;
                     huidig = null;
                 }
-                
+
                 uitgavesPopup.style.display = 'flex';
             });
         });
@@ -152,7 +152,7 @@ window.addEventListener('load', () => {
                         deleteBtn.disabled = true;
                         huidig = null;
                     } else {
-                        if (huidig) document.getElementById(huidig.getName()).classList.remove('selected');
+                        if (huidig) document.getElementById(huidig.name).classList.remove('selected');
     
                         uitgaveItem.classList.add('selected');
                         deleteBtn.disabled = false;
@@ -160,8 +160,8 @@ window.addEventListener('load', () => {
                     }
                 });
                 
-                uitgaveItem.innerHTML = `${uitgave.getName()}`;
-                uitgaveItem.id = `${uitgave.getName()}`;
+                uitgaveItem.innerHTML = `${uitgave.name}`;
+                uitgaveItem.id = `${uitgave.name}`;
                 uitgaveList.appendChild(uitgaveItem);
             });
         });
