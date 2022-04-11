@@ -32,7 +32,7 @@ export class Firebase {
         
         return get(refD(this.database, "/")).then(snapshot => {
             snapshot.forEach(child => {
-                let krant = new Krant(child.val().url, new Date(child.val().date), child.val().filename, child.val().name);
+                let krant = new Krant(child.val().url, new Date(child.val().date), child.val().filename, child.val().uid, child.val().name);
                 uitgaves.push(krant);
             });
 
@@ -54,19 +54,34 @@ export class Firebase {
     uploadKrant(file: File, name: string, date: Date): Promise<string> {
         return uploadBytes(refS(this.storage, `${file.name}`), file).then(async snapshot => {
             let url = await getDownloadURL(snapshot.ref);
+            let uid = generateUid(15);
             
-            return set(refD(this.database, `/${name}`), {
+            return set(refD(this.database, `/${uid}`), {
                 url: url,
                 date: date.toISOString(),
                 name: name,
-                filename: file.name
+                filename: file.name,
+                uid: uid
             }).then(() => "").catch(error => error.message);
         }).catch(error => error.message);
     }
 
     deleteKrant(huidig: Krant): Promise<string> {
         return deleteObject(refS(this.storage, `${huidig.filename}`)).then(() => {
-            return remove(refD(this.database, `/${huidig.getName()}`)).then(() => "").catch(error => error.message);            
+            return remove(refD(this.database, `/${huidig.uid}`)).then(() => "").catch(error => error.message);            
         }).catch(error => error.message);
     }
+}
+
+function generateUid(length: number) {
+    const src = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const random = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+    let uid = "";
+
+    for (let i = 0; i < length; i++) {
+        uid += src[random(0, src.length - 1)];
+    }
+
+    return uid;
 }

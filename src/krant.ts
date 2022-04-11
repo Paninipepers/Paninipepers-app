@@ -3,7 +3,7 @@ import * as pdfjsLib from "pdfjs-dist";
 export class Krant {
     private pdf: pdfjsLib.PDFDocumentProxy;
 
-    constructor(private url: string, private date: Date, public filename: string, private name = "Onbekende naam") {}
+    constructor(private url: string, private date: Date, readonly filename: string, readonly uid: string, private name: string) {}
 
     public async load() {
         this.pdf = await pdfjsLib.getDocument(this.url).promise;
