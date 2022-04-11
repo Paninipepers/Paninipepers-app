@@ -69,9 +69,10 @@ window.addEventListener('load', () => {
             uitgavesUl.appendChild(li);
         }
 
-        // Laad de eerste krant
-        // TODO: kijk naar meeste recente uitgave eerst
-        setCurrentKrant(uitgaves[0]);
+        // Laad de eerste krant als deze er is
+        if (uitgaves.length > 0) setCurrentKrant(uitgaves[0]);
+        else document.getElementById("spinner").classList.add("hidden");
+
         checkBars();
     }).catch(error => {
         setError(error);
