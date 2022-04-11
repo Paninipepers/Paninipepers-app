@@ -20,6 +20,7 @@ window.addEventListener('load', () => {
     uitgaveDatum.value = new Date().toISOString().substring(0, 10);
     
     let uitgavesPopup = document.getElementById('uitgaves-popup');
+    let uitgavesError = document.getElementById('uitgaves-error');
     let newBtn = document.getElementById('new') as HTMLButtonElement;
     let deleteBtn = document.getElementById('delete') as HTMLButtonElement;
     let uitgaveList = document.getElementById('uitgaves');
@@ -108,14 +109,14 @@ window.addEventListener('load', () => {
                 spinner.style.display = 'none';
 
                 if (result.length !== 0) {
-                    uploadError.innerHTML = `Kon niet verwijderen: ${result}`;
-                    uploadError.style.display = 'inline-block';
-                    uploadPopup.style.display = 'flex';
+                    uitgavesError.innerHTML = `Kon niet verwijderen: ${result}`;
+                    uitgavesError.style.display = 'inline-block';
                 } else {
                     deleteBtn.disabled = true;
                     huidig = null;
-                    uitgavesPopup.style.display = 'flex';
                 }
+                
+                uitgavesPopup.style.display = 'flex';
             });
         });
     });
