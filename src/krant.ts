@@ -27,6 +27,10 @@ export class Krant {
         return this.pdf;
     }
 
+    get uitgaveDatum(): Date {
+        return this.date;
+    }
+
     getUrl(): string {
         return this.url;
     }

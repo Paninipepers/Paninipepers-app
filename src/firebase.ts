@@ -36,6 +36,8 @@ export class Firebase {
                 uitgaves.push(krant);
             });
 
+            uitgaves = uitgaves.sort((a, b) => a.uitgaveDatum.getTime() - b.uitgaveDatum.getTime()).reverse();
+
             return uitgaves;
         });
 
