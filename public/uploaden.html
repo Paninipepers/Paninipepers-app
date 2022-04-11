@@ -31,7 +31,7 @@
     </div>
 
     <div id="upload-popup" class="popup">
-        <span class="material-icons" id="close-upload">close</span>
+        <span class="material-icons" id="upload-close">close</span>
         <h2>Uploaden</h2>
         <p id="upload-error"></p>
         <input type="text" id="name" placeholder="Naam van uitgave" required>
@@ -47,8 +47,14 @@
         <button id="upload-btn">Uploaden</button>
     </div>
 
-    <main>
-        
+    <main id="uitgaves-popup">
+        <h2>Uitgaves</h2>
+        <p id="uitgaves-error"></p>
+        <div class="controls">
+            <button id="new"><span class="material-icons">add</span> Nieuwe uitgave</button>
+            <button id="delete" disabled><span class="material-icons">delete</span> Verwijder uitgave</button>
+        </div>
+        <ul id="uitgaves"></ul>
     </main>
 </body>
 </html>

@@ -1,7 +1,7 @@
 import { FirebaseApp, initializeApp } from 'firebase/app';
-import { FirebaseStorage, getDownloadURL, getStorage, listAll, ref as refS, uploadBytes } from 'firebase/storage';
+import { deleteObject, FirebaseStorage, getDownloadURL, getStorage, listAll, ref as refS, uploadBytes } from 'firebase/storage';
 import { Auth, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { Database, getDatabase, set, ref as refD, query, get, onValue } from 'firebase/database';
+import { Database, getDatabase, set, ref as refD, query, get, onValue, remove } from 'firebase/database';
 import { Krant } from './krant';
 
 const firebaseConfig = {
@@ -32,7 +32,7 @@ export class Firebase {
         
         return get(refD(this.database, "/")).then(snapshot => {
             snapshot.forEach(child => {
-                let krant = new Krant(child.val().url, new Date(child.val().date), child.val().name);
+                let krant = new Krant(child.val().url, new Date(child.val().date), child.val().filename, child.val().name);
                 uitgaves.push(krant);
             });
 
@@ -55,13 +55,18 @@ export class Firebase {
         return uploadBytes(refS(this.storage, `${file.name}`), file).then(async snapshot => {
             let url = await getDownloadURL(snapshot.ref);
             
-            set(refD(this.database, `/${name}`), {
+            return set(refD(this.database, `/${name}`), {
                 url: url,
                 date: date.toISOString(),
-                name: name
-            });
+                name: name,
+                filename: file.name
+            }).then(() => "").catch(error => error.message);
+        }).catch(error => error.message);
+    }
 
-            return "";
+    deleteKrant(huidig: Krant): Promise<string> {
+        return deleteObject(refS(this.storage, `${huidig.filename}`)).then(() => {
+            return remove(refD(this.database, `/${huidig.getName()}`)).then(() => "").catch(error => error.message);            
         }).catch(error => error.message);
     }
 }

@@ -1,4 +1,4 @@
-const version = "1.3.1";
+const version = "1.3.2";
 const cacheName =  `paninipepers-cache-v${version}`;
 const assets = [
     '/index.html',
