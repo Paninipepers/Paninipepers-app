@@ -113,6 +113,7 @@ window.addEventListener('load', () => {
                     uploadPopup.style.display = 'flex';
                 } else {
                     deleteBtn.disabled = true;
+                    huidig = null;
                     uitgavesPopup.style.display = 'flex';
                 }
             });
