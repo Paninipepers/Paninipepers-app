@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uploaden</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="uploaden.css">
+</head>
+<body>
+    <header>
+        <img src="/images/paninipeper.jpeg" class="logo"/>
+        <h1 class="title">Paninipepers</h1>
+    </header>
+    
+    <div id="spinner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+
+    <div id="login" class="popup">
+        <h2>Inloggen</h2>
+        <p id="login-error"></p>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Wachtwoord" required>
+        <button id="login-btn">Inloggen</button>
+    </div>
+
+    <div id="upload-popup" class="popup">
+        <span class="material-icons" id="close-upload">close</span>
+        <h2>Uploaden</h2>
+        <p id="upload-error"></p>
+        <input type="text" id="name" placeholder="Naam van uitgave" required>
+        <div class="date-input">
+            <label for="date">Datum van uitgave</label>
+            <input type="date" id="date" required>
+        </div>
+        <div class="file-input">
+            <label for="file-input">Selecteer een pdf</label>
+            <input type="file" id="file-input" accept=".pdf" required>
+            <p id="gekozen"></p>
+        </div>
+        <button id="upload-btn">Uploaden</button>
+    </div>
+
+    <main>
+        
+    </main>
+</body>
+</html>

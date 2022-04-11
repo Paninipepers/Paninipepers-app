@@ -6,7 +6,3 @@ build/
 
 # Npm
 node_modules/
-package-lock.json
-
-# vscode
-.vscode/

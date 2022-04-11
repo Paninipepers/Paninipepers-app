@@ -1,10 +1,13 @@
 import { FirebaseApp, initializeApp } from 'firebase/app';
-import { FirebaseStorage, getDownloadURL, getStorage, listAll, ref } from 'firebase/storage';
+import { FirebaseStorage, getDownloadURL, getStorage, listAll, ref as refS, uploadBytes } from 'firebase/storage';
+import { Auth, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { Database, getDatabase, set, ref as refD, query, get, onValue } from 'firebase/database';
 import { Krant } from './krant';
 
 const firebaseConfig = {
     apiKey: "AIzaSyC36ZvdiHsslbnFk6tp8MzKSDh8A3t1ZLU",
     authDomain: "paninipepers.firebaseapp.com",
+    databaseURL: "https://paninipepers-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "paninipepers",
     storageBucket: "paninipepers.appspot.com",
     messagingSenderId: "41628347356",
@@ -14,23 +17,49 @@ const firebaseConfig = {
 export class Firebase {
     private app: FirebaseApp;
     private storage: FirebaseStorage;
+    private auth: Auth;
+    private database: Database;
 
     constructor() {
         this.app = initializeApp(firebaseConfig);
         this.storage = getStorage(this.app);
+        this.auth = getAuth(this.app);
+        this.database = getDatabase(this.app);
     }
 
-    async getUitgaves(): Promise<Krant[]> {
+    getUitgaves(): Promise<Krant[]> {
         let uitgaves: Krant[] = [];
-        let result = await listAll(ref(this.storage));
+        
+        return get(refD(this.database, "/")).then(snapshot => {
+            snapshot.forEach(child => {
+                let krant = new Krant(child.val().url, new Date(child.val().date), child.val().name);
+                uitgaves.push(krant);
+            });
 
-        for (let item of result.items) {
-            let url = await getDownloadURL(item);
-            let krant = new Krant(url, item.name.toLowerCase().replace(".pdf", "")); // Haal de naam van de uitgave eruit door de .pdf/.PDF te verwijderen
+            return uitgaves;
+        });
 
-            uitgaves.push(krant);
-        }
+    }
 
-        return uitgaves;
+    login(email: string, password: string): Promise<string> {
+        return signInWithEmailAndPassword(this.auth, email, password).then(() => "").catch(error => error.message);
+    }
+
+    logout(): Promise<void> {
+        return signOut(this.auth);
+    }
+
+    uploadKrant(file: File, name: string, date: Date): Promise<string> {
+        return uploadBytes(refS(this.storage, `${file.name}`), file).then(async snapshot => {
+            let url = await getDownloadURL(snapshot.ref);
+            
+            set(refD(this.database, `/${name}`), {
+                url: url,
+                date: date.toISOString(),
+                name: name
+            });
+
+            return "";
+        }).catch(error => error.message);
     }
 }

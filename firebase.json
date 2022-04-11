@@ -8,12 +8,16 @@
     ],
     "rewrites": [
       {
+        "source": "/",
+        "destination": "/index.html"
+      },
+      {
         "source": "/instructies",
         "destination": "/instructies.html"
       },
       {
-        "source": "/",
-        "destination": "/index.html"
+        "source": "/uploaden",
+        "destination": "/uploaden.html"
       }
     ],
     "headers": [

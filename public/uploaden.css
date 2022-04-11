@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
+body {
+    background: rgb(255, 255, 255);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+header {
+    position: static;
+    top: 0;
+    background: white;
+    width: 100vw;
+    height: 55px;
+    margin-bottom: 23px;
+    box-shadow: 0px 0px 23px -2px rgba(0,0,0,0.75);
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+header .logo {
+    max-height: 80%;
+}
+
+header .title {
+    color: #F59A00;
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-left: 10px;
+    font-family: 'Nunito', sans-serif;
+}
+
+#spinner {
+    position: fixed;
+    display: none;
+    top: 25%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+#spinner div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 8px solid #F59A00;
+    border-radius: 50%;
+    animation: spinner 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #F59A00 transparent transparent transparent;
+}
+
+#spinner div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+
+#spinner div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+
+#spinner div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.popup {
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    top: 50vh;
+    left: 50vw;
+    width: 90vw;
+    max-width: 500px;
+    height: 80vh;
+    max-height: 350px;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 0px 23px -2px rgba(0,0,0,0.75);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+    border-radius: 50px;
+}
+
+#login-error, #upload-error {
+    margin-top: 0;
+    color: crimson;
+    font-weight: bold;
+    display: none;
+    max-width: 80%;
+}
+
+#login input, #login button, #name, #upload-btn, #date {
+    /* margin-top: 25px; */
+    margin-bottom: 25px;
+    text-align: center;
+    width: 80%;
+    height: 2em;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 8px -2px rgba(0,0,0,0.75);
+    outline: none;
+}
+
+#login button, #upload-btn {
+    background-color: #325E9F;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#login button:active, #upload-btn:active {
+    background-color: #F59A00;
+}
+
+#upload-popup {
+    display: none;
+}
+
+#upload-popup label[for="file-input"] {
+    margin-right: 20px;
+    background-color: #F59A00;
+    padding: 5px 10px;
+    box-shadow: 0px 0px 8px -2px rgba(0,0,0,0.75);
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#upload-popup label:active {
+    background-color: #325E9F;
+}
+
+#upload-popup input[type=file] {
+    display: none;
+}
+
+div.file-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#upload-btn {
+    margin-top: 25px;
+    font-size: 1em;
+    width: 50%;
+    border-radius: 20px;
+}
+
+div.date-input {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+div.date-input label {
+    margin-right: 15px;
+}
+
+#date {
+    width: 50%;
+}
+
+#close-upload {
+    position: absolute;
+    top: 10px;
+    left: calc(100% - 60px);
+    cursor: pointer;
+    color: red;
+    font-size: 2em;
+}
