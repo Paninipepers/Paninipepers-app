@@ -22,6 +22,7 @@ window.addEventListener('load', () => {
     let uitgavesPopup = document.getElementById('uitgaves-popup');
     let uitgavesError = document.getElementById('uitgaves-error');
     let newBtn = document.getElementById('new') as HTMLButtonElement;
+    let downloadBtn = document.getElementById('download') as HTMLButtonElement;
     let deleteBtn = document.getElementById('delete') as HTMLButtonElement;
     let uitgaveList = document.getElementById('uitgaves');
 
@@ -98,6 +99,18 @@ window.addEventListener('load', () => {
         clearUploadPopup();
     });
 
+    downloadBtn.addEventListener('click', () => {
+        if (!huidig) return;
+
+        spinner.style.display = 'inline-block';
+        uitgavesPopup.style.display = 'none';
+
+        downloadURL(huidig.url, `${huidig.name}.pdf`).then(() => {
+            spinner.style.display = 'none';
+            uitgavesPopup.style.display = 'flex';
+        });
+    });
+
     deleteBtn.addEventListener('click', () => {
         if (!huidig) return;
 
@@ -112,6 +125,7 @@ window.addEventListener('load', () => {
                     uitgavesError.innerHTML = `Kon niet verwijderen: ${result}`;
                     uitgavesError.style.display = 'inline-block';
                 } else {
+                    downloadBtn.disabled = true;
                     deleteBtn.disabled = true;
                     huidig = null;
                 }
@@ -149,12 +163,14 @@ window.addEventListener('load', () => {
                 uitgaveItem.addEventListener('click', () => {
                     if (huidig === uitgave) {
                         uitgaveItem.classList.remove('selected');
+                        downloadBtn.disabled = true;
                         deleteBtn.disabled = true;
                         huidig = null;
                     } else {
                         if (huidig) document.getElementById(huidig.name).classList.remove('selected');
     
                         uitgaveItem.classList.add('selected');
+                        downloadBtn.disabled = false;
                         deleteBtn.disabled = false;
                         huidig = uitgave;
                     }
@@ -165,6 +181,19 @@ window.addEventListener('load', () => {
                 uitgaveList.appendChild(uitgaveItem);
             });
         });
+    }
+
+    async function downloadURL(url: string, filename: string) {
+        let blob = await fetch(url).then(response => response.blob());
+        let urlObj = URL.createObjectURL(blob);
+
+        let a = document.createElement('a');
+        a.href = urlObj;
+        a.download = filename;
+
+        a.click();
+
+        setTimeout(() => URL.revokeObjectURL(urlObj), 60 * 1000);
     }
 });
 
