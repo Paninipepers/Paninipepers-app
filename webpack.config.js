@@ -8,7 +8,7 @@ module.exports = (env, argv) => {
             app: './src/index.ts',
             'pdf.worker': 'pdfjs-dist/build/pdf.worker.entry',
             instructies: './src/instructies.ts',
-            uploaden: './src/uploaden.ts'
+            uitgaves: './src/uitgaves.ts'
         },
         module: {
             rules: [
@@ -31,9 +31,9 @@ module.exports = (env, argv) => {
                 filename: 'instructies.html'
             }),
             new HtmlWebpackPlugin({
-                template: './public/uploaden.html',
-                chunks: ['uploaden'],
-                filename: 'uploaden.html'
+                template: './public/uitgaves.html',
+                chunks: ['uitgaves'],
+                filename: 'uitgaves.html'
             }),
             new CopyWebpackPlugin({
                 patterns: [
@@ -44,7 +44,7 @@ module.exports = (env, argv) => {
                             ignore: [
                                 '**/index.html',
                                 '**/instructies.html',
-                                '**/uploaden.html'
+                                '**/uitgaves.html'
                             ]
                         }
                     }

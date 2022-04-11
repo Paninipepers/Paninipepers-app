@@ -16,8 +16,8 @@
         "destination": "/instructies.html"
       },
       {
-        "source": "/uploaden",
-        "destination": "/uploaden.html"
+        "source": "/uitgaves",
+        "destination": "/uitgaves.html"
       }
     ],
     "headers": [
