@@ -56,3 +56,11 @@ self.addEventListener('fetch', event => {
         });
     }));
 });
+
+self.addEventListener('push', event => {
+    // Als er een push-notificatie is, laat deze zien in de browser
+    event.waitUntil(self.registration.showNotification('Paninipepers', {
+        body: event.data.text(),
+        icon: '/images/icon_x512.png'
+    }));
+});

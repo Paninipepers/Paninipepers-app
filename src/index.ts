@@ -2,15 +2,17 @@ import * as pdfjsLib from "pdfjs-dist";
 import { Firebase } from "./firebase";
 import type { Krant } from "./krant";
 import { Viewer } from "./viewer";
+import * as ServiceworkerHandler from './serviceworkerHandler';
 
-// Registreer de service worker (alleen niet in development)
-if ('serviceWorker' in navigator && location.hostname !== "localhost") {
-    navigator.serviceWorker.register('/serviceworker.js');
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
+// Registreer de service worker
+if (ServiceworkerHandler.shouldUseServiceWorker()) {
+    ServiceworkerHandler.registerServiceWorker();
+
+    ServiceworkerHandler.onUpdate(() => {
         document.getElementById('update-info').classList.remove('hidden');
         setTimeout(() => {
             window.location.reload()
-        }, 5000);
+        }, 3000);
     });
 }
 
