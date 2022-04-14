@@ -1,0 +1,11 @@
+# Dependencies
+node_modules
+
+# Firebase
+.firebase
+
+# Output
+/dist
+
+# vscode
+.vscode
