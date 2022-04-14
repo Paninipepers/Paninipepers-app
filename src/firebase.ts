@@ -1,7 +1,7 @@
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { deleteObject, FirebaseStorage, getDownloadURL, getStorage, listAll, ref as refS, uploadBytes } from 'firebase/storage';
 import { Auth, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { Database, getDatabase, set, ref as refD, query, get, onValue, remove } from 'firebase/database';
+import { Database, getDatabase, set, ref as refD, get, remove } from 'firebase/database';
 import { Krant } from './krant';
 import { user } from '.';
 
@@ -24,7 +24,7 @@ export class Firebase {
     static getUitgaves(): Promise<Krant[]> {
         let uitgaves: Krant[] = [];
         
-        return get(refD(this.database, "/")).then(snapshot => {
+        return get(refD(this.database, "/uitgaves")).then(snapshot => {
             snapshot.forEach(child => {
                 let krant = new Krant(child.val().url, new Date(child.val().date), child.val().uid, child.val().name);
                 uitgaves.push(krant);
