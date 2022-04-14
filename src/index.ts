@@ -3,9 +3,10 @@ import { Firebase } from "./firebase";
 import type { Krant } from "./krant";
 import { Viewer } from "./viewer";
 import * as ServiceworkerHandler from './serviceworkerHandler';
+import { User } from "./user";
 
 // Registreer de service worker
-if (ServiceworkerHandler.shouldUseServiceWorker()) {
+if (ServiceworkerHandler.shouldUseServiceWorker(true)) {
     ServiceworkerHandler.registerServiceWorker();
 
     ServiceworkerHandler.onUpdate(() => {
@@ -18,12 +19,19 @@ if (ServiceworkerHandler.shouldUseServiceWorker()) {
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = './dist/pdf.worker.bundle.js';
 
+User.onFirstVisit = () => {
+    alert("Welkom!");
+};
+
+export let user: User;
+
 window.addEventListener('load', () => {
     // App setup
     let viewerContainer = <HTMLDivElement> document.getElementById("viewer");
     let viewer = new Viewer(viewerContainer);
-    let firebase = new Firebase();
     let currentKrant: Krant = null;
+
+    user = new User();
     
     // Drop up events
     let dropupBtn = document.getElementById("dropup-btn");
@@ -41,7 +49,7 @@ window.addEventListener('load', () => {
     });
 
     // Haal een lijst met uitgaves op
-    firebase.getUitgaves().then(uitgaves => {
+    Firebase.getUitgaves().then(uitgaves => {
         // Vul de dropup met uitgaves
         let uitgavesUl = document.getElementById("uitgaves");
 

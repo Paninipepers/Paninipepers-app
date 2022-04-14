@@ -3,6 +3,7 @@ import { deleteObject, FirebaseStorage, getDownloadURL, getStorage, listAll, ref
 import { Auth, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { Database, getDatabase, set, ref as refD, query, get, onValue, remove } from 'firebase/database';
 import { Krant } from './krant';
+import { user } from '.';
 
 const firebaseConfig = {
     apiKey: "AIzaSyC36ZvdiHsslbnFk6tp8MzKSDh8A3t1ZLU",
@@ -15,19 +16,12 @@ const firebaseConfig = {
   };
 
 export class Firebase {
-    private app: FirebaseApp;
-    private storage: FirebaseStorage;
-    private auth: Auth;
-    private database: Database;
+    private static app: FirebaseApp = initializeApp(firebaseConfig);
+    private static storage: FirebaseStorage = getStorage(this.app);
+    private static auth: Auth = getAuth(this.app);
+    private static database: Database = getDatabase(this.app);
 
-    constructor() {
-        this.app = initializeApp(firebaseConfig);
-        this.storage = getStorage(this.app);
-        this.auth = getAuth(this.app);
-        this.database = getDatabase(this.app);
-    }
-
-    getUitgaves(): Promise<Krant[]> {
+    static getUitgaves(): Promise<Krant[]> {
         let uitgaves: Krant[] = [];
         
         return get(refD(this.database, "/")).then(snapshot => {
@@ -43,21 +37,21 @@ export class Firebase {
 
     }
 
-    login(email: string, password: string): Promise<string> {
+    static login(email: string, password: string): Promise<string> {
         return signInWithEmailAndPassword(this.auth, email, password).then(() => "").catch(error => error.message);
     }
 
-    logout(): Promise<void> {
+    static logout(): Promise<void> {
         return signOut(this.auth);
     }
 
-    uploadKrant(file: File, name: string, date: Date): Promise<string> {
+    static uploadKrant(file: File, name: string, date: Date): Promise<string> {
         let uid = generateUid(15);
 
         return uploadBytes(refS(this.storage, `${uid}.pdf`), file).then(async snapshot => {
             let url = await getDownloadURL(snapshot.ref);
             
-            return set(refD(this.database, `/${uid}`), {
+            return set(refD(this.database, `/uitgaves/${uid}`), {
                 url: url,
                 date: date.toISOString(),
                 name: name,
@@ -66,14 +60,18 @@ export class Firebase {
         }).catch(error => error.message);
     }
 
-    deleteKrant(huidig: Krant): Promise<string> {
+    static deleteKrant(huidig: Krant): Promise<string> {
         return deleteObject(refS(this.storage, `${huidig.uid}.pdf`)).then(() => {
-            return remove(refD(this.database, `/${huidig.uid}`)).then(() => "").catch(error => error.message);            
+            return remove(refD(this.database, `/uitgaves/${huidig.uid}`)).then(() => "").catch(error => error.message);            
         }).catch(error => error.message);
+    }
+
+    static storeSubscription(subscription: PushSubscription): Promise<string> {
+        return set(refD(this.database, `/subscriptions/${user.getUid()}`), subscription.toJSON()).then(() => "").catch(error => error.message);
     }
 }
 
-function generateUid(length: number) {
+export function generateUid(length: number) {
     const src = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     const random = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
 

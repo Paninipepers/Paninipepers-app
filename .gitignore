@@ -6,3 +6,10 @@ build/
 
 # Npm
 node_modules/
+
+# Firebase rules
+storage.rules
+
+# Push notifications
+functions/
+keys.txt

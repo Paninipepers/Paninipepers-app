@@ -40,7 +40,7 @@ window.addEventListener('load', () => {
         spinner.style.display = 'inline-block';
         loginPopup.style.display = 'none';
 
-        firebase.login(email.value, password.value).then(result => {
+        Firebase.login(email.value, password.value).then(result => {
             if (result.length !== 0) {
                 loginError.innerHTML = `Kon niet inloggen: ${result}`;
                 loginError.style.display = 'inline-block';
@@ -72,7 +72,7 @@ window.addEventListener('load', () => {
         spinner.style.display = 'inline-block';
         uploadPopup.style.display = 'none';
 
-        firebase.uploadKrant(file, uitgaveNaam.value, uitgaveDatum.valueAsDate).then(result => {
+        Firebase.uploadKrant(file, uitgaveNaam.value, uitgaveDatum.valueAsDate).then(result => {
             fillUitgavesList().then(() => {
                 spinner.style.display = 'none';
                 
@@ -117,7 +117,7 @@ window.addEventListener('load', () => {
         uitgavesPopup.style.display = 'none';
         spinner.style.display = 'inline-block';
 
-        firebase.deleteKrant(huidig).then(result => {
+        Firebase.deleteKrant(huidig).then(result => {
             fillUitgavesList().then(() => {
                 spinner.style.display = 'none';
 
@@ -137,7 +137,7 @@ window.addEventListener('load', () => {
 
     function loggedIn() {
         window.addEventListener('beforeunload', () => {
-            firebase.logout();
+            Firebase.logout();
         });
 
         fillUitgavesList().then(() => {
@@ -154,7 +154,7 @@ window.addEventListener('load', () => {
     }
     
     function fillUitgavesList() {
-        return firebase.getUitgaves().then(uitgaves => {
+        return Firebase.getUitgaves().then(uitgaves => {
             uitgaveList.innerHTML = '';
     
             uitgaves.forEach(uitgave => {
