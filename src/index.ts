@@ -6,7 +6,7 @@ import * as ServiceworkerHandler from './serviceworkerHandler';
 import { User } from "./user";
 
 // Registreer de service worker
-if (ServiceworkerHandler.shouldUseServiceWorker(true)) {
+if (ServiceworkerHandler.shouldUseServiceWorker()) {
     ServiceworkerHandler.registerServiceWorker();
 
     ServiceworkerHandler.onUpdate(() => {
@@ -20,7 +20,18 @@ if (ServiceworkerHandler.shouldUseServiceWorker(true)) {
 pdfjsLib.GlobalWorkerOptions.workerSrc = './dist/pdf.worker.bundle.js';
 
 User.onFirstVisit = () => {
-    alert("Welkom!");
+    document.getElementById('first-visit-info').style.display = 'flex';
+
+    // Detecteer besturingssysteem
+    let userAgent = navigator.userAgent || navigator.vendor;
+    
+    if (/windows phone/i.test(userAgent)) {
+        return
+    } else if (/android/i.test(userAgent)) {
+        document.getElementById('os-specific').innerText = " Doe dat via de 3 puntjes bovenin je beeldscherm.";
+    } else if (/iPad|iPhone|iPod/.test(userAgent)) {
+        document.getElementById('os-specific').innerText = " Doe dat door op het vierkantje met een pijl te klikken.";
+    }
 };
 
 window.addEventListener('load', () => {
@@ -44,6 +55,10 @@ window.addEventListener('load', () => {
 
     window.addEventListener("resize", () => {
         checkBars();
+    });
+
+    document.getElementById('close-first-visit').addEventListener('click', () => {
+        document.getElementById('first-visit-info').style.display = 'none';
     });
 
     // Haal een lijst met uitgaves op
