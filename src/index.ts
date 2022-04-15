@@ -84,7 +84,7 @@ window.addEventListener('load', () => {
         }
 
         // Voeg een placeholder toe als er maar 1 uitgave is en de dropup dus leeg is
-        if (uitgaves.length === 1) {
+        if (uitgaves.length <= 1) {
             let li = document.createElement("li");
             li.id = "placeholder";
             li.innerHTML = "Er zijn nog geen eerdere uitgaves, wanneer die er wel zijn komen ze hier te staan.";

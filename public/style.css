@@ -193,6 +193,19 @@ footer.opened .footer-content {
     color: #F59A00;
 }
 
+.footer-content p {
+    font-family: 'Nunito', sans-serif;
+    color: white;
+    text-align: center;
+    border-top: 3px solid #F59A00;
+    width: 80%;
+}
+
+.footer-content p a {
+    color: #F59A00;
+    cursor: pointer;
+}
+
 #error-info {
     position: fixed;
     top: 50vh;
