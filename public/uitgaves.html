@@ -47,6 +47,14 @@
         <button id="upload-btn">Uploaden</button>
     </div>
 
+    <div id="notification-popup" class="popup">
+        <span class="material-icons" id="notification-close">close</span>
+        <h2>Notificatie</h2>
+        <p id="notification-error"></p>
+        <input type="text" id="notification-text" placeholder="Tekst van de notificatie" required>
+        <button id="send-notification"><span class="material-icons">send</span>Verstuur</button>
+    </div>
+
     <main id="uitgaves-popup">
         <h2>Uitgaves</h2>
         <p id="uitgaves-error"></p>
@@ -56,6 +64,8 @@
             <button id="delete" disabled><span class="material-icons">delete</span> Verwijder uitgave</button>
         </div>
         <ul id="uitgaves"></ul>
+        <h2>Notificaties</h2>
+        <button id="notification-btn"><span class="material-icons">notifications</span>Notificatie sturen</button>
     </main>
 </body>
 </html>

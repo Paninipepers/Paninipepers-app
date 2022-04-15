@@ -11,5 +11,5 @@ node_modules/
 storage.rules
 
 # Push notifications
-functions/
+notifications/
 keys.txt

@@ -102,7 +102,7 @@ header .title {
     border-radius: 50px;
 }
 
-#login-error, #upload-error, #uitgaves-error {
+#login-error, #upload-error, #uitgaves-error, #notification-error {
     margin-top: 0;
     color: crimson;
     font-weight: bold;
@@ -110,7 +110,7 @@ header .title {
     max-width: 80%;
 }
 
-#login input, #login button, #name, #upload-btn, #date {
+#login input, #login button, #name, #upload-btn, #date, #notification-text {
     margin-bottom: 25px;
     text-align: center;
     width: 80%;
@@ -184,7 +184,7 @@ div.date-input label {
     width: 50%;
 }
 
-#upload-close {
+#upload-close, #notification-close {
     position: absolute;
     top: 10px;
     left: calc(100% - 60px);
@@ -230,7 +230,7 @@ div.controls button[disabled] {
     cursor: not-allowed;
 }
 
-div.controls button span {
+button span {
     vertical-align: bottom;
 }
 
@@ -249,4 +249,27 @@ main ul li {
 main ul li.selected {
     color: #F59A00;
     font-weight: bold;
+}
+
+#notification-popup {
+    display: none;
+}
+
+#send-notification, #notification-btn {
+    background-color: #F59A00;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 8px -2px rgba(0,0,0,0.75);
+    outline: none;
+    color: white;
+    font-size: 1em;
+    padding: 5px 10px;
+    font-weight: bold;
+}
+
+#send-notification:active {
+    background-color: #325E9F;
 }

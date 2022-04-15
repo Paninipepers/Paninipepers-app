@@ -1,9 +1,9 @@
 import { FirebaseApp, initializeApp } from 'firebase/app';
-import { deleteObject, FirebaseStorage, getDownloadURL, getStorage, listAll, ref as refS, uploadBytes } from 'firebase/storage';
+import { deleteObject, FirebaseStorage, getDownloadURL, getStorage, ref as refS, uploadBytes } from 'firebase/storage';
 import { Auth, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { Database, getDatabase, set, ref as refD, get, remove } from 'firebase/database';
 import { Krant } from './krant';
-import { user } from '.';
+import { User } from './user';
 
 const firebaseConfig = {
     apiKey: "AIzaSyC36ZvdiHsslbnFk6tp8MzKSDh8A3t1ZLU",
@@ -13,7 +13,7 @@ const firebaseConfig = {
     storageBucket: "paninipepers.appspot.com",
     messagingSenderId: "41628347356",
     appId: "1:41628347356:web:3b19baa0c9c7c35fde7d19"
-  };
+};
 
 export class Firebase {
     private static app: FirebaseApp = initializeApp(firebaseConfig);
@@ -67,7 +67,27 @@ export class Firebase {
     }
 
     static storeSubscription(subscription: PushSubscription): Promise<string> {
-        return set(refD(this.database, `/subscriptions/${user.getUid()}`), subscription.toJSON()).then(() => "").catch(error => error.message);
+        return set(refD(this.database, `/subscriptions/${User.current.getUid()}`), subscription.toJSON()).then(() => "").catch(error => error.message);
+    }
+
+    static sendNotification(text: string): Promise<string> { 
+        return get(refD(this.database, "/subscriptions")).then(snapshot => {
+            snapshot.forEach(child => {
+                const requestBody = {...child.val(), msg: text};
+                let headers = new Headers();
+
+                headers.append('Content-Type', 'application/json');
+                headers.append("Access-Control-Allow-Origin", "*")
+
+                console.log(requestBody);
+
+                fetch('https://paninipepers.herokuapp.com/api/sendNotification', {
+                    method: 'POST',
+                    body: JSON.stringify(requestBody),
+                    headers: headers
+                });
+            });
+        }).then(() => "").catch(error => error.message);
     }
 }
 

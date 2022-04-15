@@ -23,15 +23,13 @@ User.onFirstVisit = () => {
     alert("Welkom!");
 };
 
-export let user: User;
-
 window.addEventListener('load', () => {
     // App setup
     let viewerContainer = <HTMLDivElement> document.getElementById("viewer");
     let viewer = new Viewer(viewerContainer);
     let currentKrant: Krant = null;
 
-    user = new User();
+    User.current = new User();
     
     // Drop up events
     let dropupBtn = document.getElementById("dropup-btn");

@@ -25,10 +25,16 @@ window.addEventListener('load', () => {
     let downloadBtn = document.getElementById('download') as HTMLButtonElement;
     let deleteBtn = document.getElementById('delete') as HTMLButtonElement;
     let uitgaveList = document.getElementById('uitgaves');
+    
+    let notificationPopup = document.getElementById('notification-popup');
+    let notificationBtn = document.getElementById('notification-btn') as HTMLButtonElement;
+    let sendNotificationBtn = document.getElementById('send-notification') as HTMLButtonElement;
+    let notificationError = document.getElementById('notification-error');
+    let notificationClose = document.getElementById('notification-close');
+    let notificationText = document.getElementById('notification-text') as HTMLInputElement;
 
     let huidig: Krant = null;
     let spinner = document.getElementById("spinner");
-    let firebase = new Firebase();
 
     loginBtn.addEventListener('click', () => {
         if (email.value.length <= 0 || password.value.length <= 0) {
@@ -135,6 +141,39 @@ window.addEventListener('load', () => {
         });
     });
 
+    notificationBtn.addEventListener('click', () => {
+        notificationPopup.style.display = 'flex';
+        uitgavesPopup.style.display = 'none';
+    });
+
+    notificationClose.addEventListener('click', () => {
+        notificationPopup.style.display = 'none';
+        uitgavesPopup.style.display = 'flex';
+        clearNotificationPopup();
+    });
+
+    sendNotificationBtn.addEventListener('click', () => {
+        if (notificationText.value.length <= 0) {
+            notificationError.innerHTML = "Vul een bericht in.";
+            notificationError.style.display = 'inline-block';
+            return;
+        } else {
+            notificationPopup.style.display = 'none';
+            spinner.style.display = 'inline-block';
+
+            Firebase.sendNotification(notificationText.value).then(result => {
+                if (result.length !== 0) {
+                    notificationError.innerHTML = `Kon niet versturen: ${result}`;
+                    notificationError.style.display = 'inline-block';
+                } else {
+                    spinner.style.display = 'none';
+                    uitgavesPopup.style.display = 'flex';
+                    clearNotificationPopup();
+                }
+            });
+        }
+    });
+
     function loggedIn() {
         window.addEventListener('beforeunload', () => {
             Firebase.logout();
@@ -151,6 +190,10 @@ window.addEventListener('load', () => {
         uitgaveDatum.value = new Date().toISOString().substring(0, 10);
         uitgaveFile.value = '';
         gekozen.innerText = '';
+    }
+
+    function clearNotificationPopup() {
+        notificationText.value = '';
     }
     
     function fillUitgavesList() {

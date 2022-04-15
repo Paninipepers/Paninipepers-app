@@ -12,6 +12,10 @@
         "destination": "/index.html"
       },
       {
+        "source": "/pwa",
+        "destination": "/index.html"
+      },
+      {
         "source": "/instructies",
         "destination": "/instructies.html"
       },
