@@ -2,26 +2,34 @@ import * as pdfjsLib from "pdfjs-dist";
 import { Firebase } from "./firebase";
 import type { Krant } from "./krant";
 import { Viewer } from "./viewer";
+import * as ServiceworkerHandler from './serviceworkerHandler';
+import { User } from "./user";
 
-// Registreer de service worker (alleen niet in development)
-if ('serviceWorker' in navigator && location.hostname !== "localhost") {
-    navigator.serviceWorker.register('/serviceworker.js');
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
+// Registreer de service worker
+if (ServiceworkerHandler.shouldUseServiceWorker(true)) {
+    ServiceworkerHandler.registerServiceWorker();
+
+    ServiceworkerHandler.onUpdate(() => {
         document.getElementById('update-info').classList.remove('hidden');
         setTimeout(() => {
             window.location.reload()
-        }, 5000);
+        }, 3000);
     });
 }
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = './dist/pdf.worker.bundle.js';
 
+User.onFirstVisit = () => {
+    alert("Welkom!");
+};
+
 window.addEventListener('load', () => {
     // App setup
     let viewerContainer = <HTMLDivElement> document.getElementById("viewer");
     let viewer = new Viewer(viewerContainer);
-    let firebase = new Firebase();
     let currentKrant: Krant = null;
+
+    User.current = new User();
     
     // Drop up events
     let dropupBtn = document.getElementById("dropup-btn");
@@ -39,7 +47,7 @@ window.addEventListener('load', () => {
     });
 
     // Haal een lijst met uitgaves op
-    firebase.getUitgaves().then(uitgaves => {
+    Firebase.getUitgaves().then(uitgaves => {
         // Vul de dropup met uitgaves
         let uitgavesUl = document.getElementById("uitgaves");
 

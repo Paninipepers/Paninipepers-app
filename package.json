@@ -7,7 +7,8 @@
     "build": "webpack build --mode=production",
     "dev": "webpack serve --mode=development",
     "deploy:hosting": "firebase deploy --only hosting",
-    "deploy": "firebase deploy"
+    "deploy:preview": "firebase hosting:channel:deploy notifications",
+    "deploy:all": "firebase deploy"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^10.2.4",

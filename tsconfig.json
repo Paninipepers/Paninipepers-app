@@ -10,5 +10,8 @@
         "allowSyntheticDefaultImports": true,
         "importsNotUsedAsValues": "error",
         "resolveJsonModule": true
-    }
+    },
+    "exclude": [
+        "functions"
+    ]
 }

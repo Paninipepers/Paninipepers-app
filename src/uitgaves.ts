@@ -25,10 +25,16 @@ window.addEventListener('load', () => {
     let downloadBtn = document.getElementById('download') as HTMLButtonElement;
     let deleteBtn = document.getElementById('delete') as HTMLButtonElement;
     let uitgaveList = document.getElementById('uitgaves');
+    
+    let notificationPopup = document.getElementById('notification-popup');
+    let notificationBtn = document.getElementById('notification-btn') as HTMLButtonElement;
+    let sendNotificationBtn = document.getElementById('send-notification') as HTMLButtonElement;
+    let notificationError = document.getElementById('notification-error');
+    let notificationClose = document.getElementById('notification-close');
+    let notificationText = document.getElementById('notification-text') as HTMLInputElement;
 
     let huidig: Krant = null;
     let spinner = document.getElementById("spinner");
-    let firebase = new Firebase();
 
     loginBtn.addEventListener('click', () => {
         if (email.value.length <= 0 || password.value.length <= 0) {
@@ -40,7 +46,7 @@ window.addEventListener('load', () => {
         spinner.style.display = 'inline-block';
         loginPopup.style.display = 'none';
 
-        firebase.login(email.value, password.value).then(result => {
+        Firebase.login(email.value, password.value).then(result => {
             if (result.length !== 0) {
                 loginError.innerHTML = `Kon niet inloggen: ${result}`;
                 loginError.style.display = 'inline-block';
@@ -72,7 +78,7 @@ window.addEventListener('load', () => {
         spinner.style.display = 'inline-block';
         uploadPopup.style.display = 'none';
 
-        firebase.uploadKrant(file, uitgaveNaam.value, uitgaveDatum.valueAsDate).then(result => {
+        Firebase.uploadKrant(file, uitgaveNaam.value, uitgaveDatum.valueAsDate).then(result => {
             fillUitgavesList().then(() => {
                 spinner.style.display = 'none';
                 
@@ -117,7 +123,7 @@ window.addEventListener('load', () => {
         uitgavesPopup.style.display = 'none';
         spinner.style.display = 'inline-block';
 
-        firebase.deleteKrant(huidig).then(result => {
+        Firebase.deleteKrant(huidig).then(result => {
             fillUitgavesList().then(() => {
                 spinner.style.display = 'none';
 
@@ -135,9 +141,42 @@ window.addEventListener('load', () => {
         });
     });
 
+    notificationBtn.addEventListener('click', () => {
+        notificationPopup.style.display = 'flex';
+        uitgavesPopup.style.display = 'none';
+    });
+
+    notificationClose.addEventListener('click', () => {
+        notificationPopup.style.display = 'none';
+        uitgavesPopup.style.display = 'flex';
+        clearNotificationPopup();
+    });
+
+    sendNotificationBtn.addEventListener('click', () => {
+        if (notificationText.value.length <= 0) {
+            notificationError.innerHTML = "Vul een bericht in.";
+            notificationError.style.display = 'inline-block';
+            return;
+        } else {
+            notificationPopup.style.display = 'none';
+            spinner.style.display = 'inline-block';
+
+            Firebase.sendNotification(notificationText.value).then(result => {
+                if (result.length !== 0) {
+                    notificationError.innerHTML = `Kon niet versturen: ${result}`;
+                    notificationError.style.display = 'inline-block';
+                } else {
+                    spinner.style.display = 'none';
+                    uitgavesPopup.style.display = 'flex';
+                    clearNotificationPopup();
+                }
+            });
+        }
+    });
+
     function loggedIn() {
         window.addEventListener('beforeunload', () => {
-            firebase.logout();
+            Firebase.logout();
         });
 
         fillUitgavesList().then(() => {
@@ -152,9 +191,13 @@ window.addEventListener('load', () => {
         uitgaveFile.value = '';
         gekozen.innerText = '';
     }
+
+    function clearNotificationPopup() {
+        notificationText.value = '';
+    }
     
     function fillUitgavesList() {
-        return firebase.getUitgaves().then(uitgaves => {
+        return Firebase.getUitgaves().then(uitgaves => {
             uitgaveList.innerHTML = '';
     
             uitgaves.forEach(uitgave => {

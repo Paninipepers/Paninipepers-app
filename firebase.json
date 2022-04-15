@@ -12,6 +12,10 @@
         "destination": "/index.html"
       },
       {
+        "source": "/pwa",
+        "destination": "/index.html"
+      },
+      {
         "source": "/instructies",
         "destination": "/instructies.html"
       },
@@ -21,18 +25,21 @@
       }
     ],
     "headers": [
-			{
-				"source": "**",
-				"headers": [
-					{
-						"key": "Cache-Control",
-						"value": "max-age=0"
-					}
-				]
-			}
-		]
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=0"
+          }
+        ]
+      }
+    ]
   },
   "storage": {
     "rules": "storage.rules"
+  },
+  "functions": {
+    "predeploy": "npm --prefix \"$RESOURCE_DIR\" run build"
   }
 }
