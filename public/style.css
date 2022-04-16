@@ -356,10 +356,9 @@ footer.opened .footer-content {
 
 .switch {
     position: relative;
-    display: inline-block;
     width: 60px;
     height: 34px;
-    margin-left: 20px;
+    margin-top: 10px;
 }
 
 .switch #notifications {
@@ -406,6 +405,7 @@ footer.opened .footer-content {
 
 #settings ul li {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
 }

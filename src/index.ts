@@ -109,7 +109,8 @@ window.addEventListener('load', () => {
     let notificationSwitch = document.getElementById("notifications") as HTMLInputElement;
 
     settingsBtn.addEventListener('click', () => {
-        settings.style.display = 'flex';
+        if (!settings.style.display || settings.style.display === 'none') settings.style.display = 'flex';
+        else settings.style.display = 'none';
     });
 
     closeSettingsBtn.addEventListener('click', () => {
