@@ -67,7 +67,11 @@ export class Firebase {
     }
 
     static storeSubscription(subscription: PushSubscription): Promise<string> {
-        return set(refD(this.database, `/subscriptions/${User.current.getUid()}`), subscription.toJSON()).then(() => "").catch(error => error.message);
+        return set(refD(this.database, `/subscriptions/${User.current.uid}`), subscription.toJSON()).then(() => "").catch(error => error.message);
+    }
+
+    static removeSubscription(): Promise<string> {
+        return set(refD(this.database, `/subscriptions/${User.current.uid}`), null).then(() => "").catch(error => error.message);
     }
 
     static sendNotification(text: string): Promise<string> { 

@@ -101,6 +101,53 @@ window.addEventListener('load', () => {
         setError(error);
         toggleError();
     });
+
+    // Settings
+    let settingsBtn = document.getElementById("settings-btn");
+    let settings = document.getElementById("settings");
+    let closeSettingsBtn = document.getElementById("close-settings");
+    let notificationSwitch = document.getElementById("notifications") as HTMLInputElement;
+
+    settingsBtn.addEventListener('click', () => {
+        settings.style.display = 'flex';
+    });
+
+    closeSettingsBtn.addEventListener('click', () => {
+        settings.style.display = 'none';
+    });
+
+    notificationSwitch.checked = User.current.notifications;
+    notificationSwitch.addEventListener('change', () => {
+        if (notificationSwitch.checked && !User.current.notifications) {
+            if (Notification.permission === "denied") {
+                settings.style.display = 'none';
+                notificationSwitch.checked = false;
+
+                setError(new Error("Je hebt de notificaties geweigerd, zet ze eerst aan via het menu van de browser en probeer het dan opnieuw."));
+                toggleError();
+            } else if (Notification.permission !== 'granted') Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    navigator.serviceWorker.getRegistration().then(registration => {
+                        ServiceworkerHandler.subscribeAndStore(registration);
+                        User.current.notifications = true;
+                    });
+                } else {
+                    notificationSwitch.checked = false;
+                }
+            });
+            else navigator.serviceWorker.getRegistration().then(registration => {
+                ServiceworkerHandler.subscribeAndStore(registration);
+                User.current.notifications = true;
+            });
+        } else if (!notificationSwitch.checked && User.current.notifications) {
+            navigator.serviceWorker.getRegistration().then(registration => {
+                registration.pushManager.getSubscription().then(subscription => {
+                    ServiceworkerHandler.unsubscribeAndRemove(subscription);
+                    User.current.notifications = false;
+                });
+            });
+        }
+    });
     
     // Handige functies
     function toggleDropup() {
@@ -122,7 +169,7 @@ window.addEventListener('load', () => {
         } else {
             document.querySelector("header").style.display = 'flex';
             document.querySelector("footer").style.display = 'flex';
-            document.getElementById("viewer").style.maxHeight = 'calc(100vh - 55px - 23px - 23px - 60px)';
+            document.getElementById("viewer").style.maxHeight = 'calc(100vh - 55px - 60px)';
         }
     }
     
