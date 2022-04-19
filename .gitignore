@@ -9,3 +9,7 @@ node_modules
 
 # vscode
 .vscode
+
+# Push messages
+notifications
+keys.txt

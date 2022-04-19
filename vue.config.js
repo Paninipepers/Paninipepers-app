@@ -1,7 +1,12 @@
 const { defineConfig } = require('@vue/cli-service');
+const { InjectManifest } = require('workbox-webpack-plugin');
 
 module.exports = defineConfig({
-    pwa: {
-        workboxPluginMode: 'InjectManifest'
+    configureWebpack: {
+        plugins: [
+            new InjectManifest({
+                swSrc: './public/serviceworker.js'
+            })
+        ]
     }
 });

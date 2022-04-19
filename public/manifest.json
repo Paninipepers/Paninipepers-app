@@ -1,0 +1,20 @@
+{
+    "short_name": "Paninipepers",
+    "name": "Paninipepers",
+    "description": "Schoolkrant van het Adelbert College: Paninipepers",
+    "icons": [
+        {
+            "src": "/images/icon_x192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/images/icon_x512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "gcm_sender_id": "103953800507"
+}

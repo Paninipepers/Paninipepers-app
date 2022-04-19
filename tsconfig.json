@@ -35,7 +35,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-  ],
+, "public/serviceworker.ts"  ],
   "exclude": [
     "node_modules"
   ]
