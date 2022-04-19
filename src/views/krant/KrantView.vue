@@ -13,7 +13,7 @@
     <Spinner v-if="loading"/>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
     @import '@/variables.scss';
 
     main {

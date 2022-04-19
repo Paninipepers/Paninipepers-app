@@ -7,7 +7,7 @@
     </ul>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
     @import '@/variables.scss';
 
     input {

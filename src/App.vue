@@ -58,6 +58,7 @@ body {
   import Title from '@/components/Title.vue';
   import Nav from './components/Nav.vue';
   import * as ServiceworkerHandler from './serviceworkerHandler';
+  import { User } from './user';
 
   @Options({
     components: {
@@ -69,6 +70,8 @@ body {
     newUpdate: boolean = false;
 
     created() {
+      User.current = new User();
+
       ServiceworkerHandler.onUpdate(() => {
           this.newUpdate = true;
 

@@ -4,7 +4,7 @@
     </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
     div.reader {
         width: 100vw;
         max-height: calc(100vh - 170px);
