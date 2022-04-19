@@ -36,8 +36,9 @@
             let page = await this.pdf.getPage(this.page);
             let viewport = page.getViewport({ scale: 1 });
 
-            this.$refs.target.width = innerWidth * 0.9;
+            this.$refs.target.width = (innerWidth > innerHeight ? innerWidth : innerHeight) * 0.95;
             let scale = this.$refs.target.width / viewport.width;
+            scale = scale < 1 ? 1 : scale;
             let scaledViewport = page.getViewport({ scale });
 
             this.$refs.target.height = scaledViewport.height;

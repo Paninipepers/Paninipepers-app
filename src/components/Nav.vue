@@ -11,7 +11,7 @@
 
     nav {
         position: absolute;
-        top: calc(100vh - 60px);
+        top: calc(100% - 60px);
         width: 100vw;
         height: 60px;
         display: flex;

@@ -7,7 +7,7 @@
 <style lang="scss">
     div.reader {
         width: 100vw;
-        max-height: calc(100vh - 55px - 60px);
+        max-height: calc(100vh - 170px);
         overflow: auto;
         display: flex;
         flex-direction: column;
