@@ -3,6 +3,11 @@
   <router-view/>
   <Nav/>
   <div v-if="newUpdate" id="update-info">Update installeren</div>
+  <div v-if="firstVisit" id="first-visit">
+    <Popup :title="'Welkom!'" @close="firstVisit = false">
+      <p>Je hebt onze app gevonden, een hele prestatie. Wees trots op jezelf en voeg hem ook gelijk even toe aan je hoofdscherm.{{ osInstructions }} Ga naar <a href="https://paninipepers.web.app/instructies" target="_blank">paninipepers.web.app/instructies</a> voor uitleg over het installeren van de app.</p>
+    </Popup>
+  </div>
 </template>
 
 <style lang="scss">
@@ -50,6 +55,22 @@ body {
     transition: opacity 1s ease-in-out;
     pointer-events: none;
   }
+
+  #first-visit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      width: 90%;
+
+      a {
+
+        cursor: pointer;
+        color: #F59A00;
+      }
+    }
+  }
 }
 </style>
 
@@ -59,17 +80,24 @@ body {
   import Nav from './components/Nav.vue';
   import * as ServiceworkerHandler from './serviceworkerHandler';
   import { User } from './user';
+  import Popup from './components/Popup.vue';
 
   @Options({
     components: {
       Title,
-      Nav
+      Nav,
+      Popup
     }
   })
   export default class App extends Vue {
     newUpdate: boolean = false;
+    firstVisit: boolean = false;
 
     created() {
+      User.onFirstVisit = () => {
+        this.firstVisit = true;
+      };
+
       User.current = new User();
 
       ServiceworkerHandler.onUpdate(() => {
@@ -80,6 +108,18 @@ body {
             window.location.reload();
           }, 3000);
       });
+    }
+
+    get osInstructions() {
+      let userAgent = navigator.userAgent || navigator.vendor;
+    
+      if (/windows phone/i.test(userAgent)) {
+          return '';
+      } else if (/android/i.test(userAgent)) {
+          return " Doe dat via de 3 puntjes bovenin je beeldscherm.";
+      } else if (/iPad|iPhone|iPod/.test(userAgent)) {
+          return " Doe dat door op het vierkantje met een pijl te klikken.";
+      }
     }
   }
 </script>
