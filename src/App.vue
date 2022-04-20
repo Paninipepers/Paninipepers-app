@@ -1,7 +1,7 @@
 <template>
   <Title/>
   <router-view/>
-  <Nav/>
+  <Nav v-if="showNav"/>
   <div v-if="newUpdate" id="update-info">Update installeren</div>
   <div v-if="firstVisit" id="first-visit">
     <Popup :title="'Welkom!'" @close="firstVisit = false">
@@ -124,6 +124,10 @@ body {
       } else if (/iPad|iPhone|iPod/.test(userAgent)) {
           return " Doe dat door op het vierkantje met een pijl te klikken.";
       }
+    }
+
+    get showNav() {
+      return this.$route.name === 'krant' || this.$route.name === 'settings' || this.$route.name === 'search';
     }
   }
 </script>
