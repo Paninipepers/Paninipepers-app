@@ -2,7 +2,7 @@
     <input type="text" placeholder="Zoek op naam" class="zoekterm" v-model="zoekterm">
     <ul>
         <li v-for="uitgave in filteredUitgaves" :key="uitgave.uid" @click="select(uitgave.uid)">{{ uitgave.name }}</li>
-        <li v-if="uitgaves.length === 1">Er zijn nog geen eerdere editites.</li>
+        <li v-if="uitgaves.length === 1">Er zijn nog geen eerdere uitgaven.</li>
         <li v-else-if="zoekterm.length > 0">Geen krant gevonden met deze naam.</li>
     </ul>
 </template>

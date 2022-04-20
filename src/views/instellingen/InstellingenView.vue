@@ -4,7 +4,7 @@
         <ul>
             <li>
                 <span v-if="denied">Je hebt de notificaties geweigerd, zet ze eerst aan via het menu van de browser en probeer het dan opnieuw.</span>
-                Ontvang een notificatie zodra er een nieuwe editie verschijnt:
+                Ontvang een notificatie zodra er een nieuwe uitgave verschijnt:
                 <Switch :value="enabled" @change="checkNotificationStatus"/>
             </li>
         </ul>
@@ -35,6 +35,8 @@
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
+                text-align: center;
+                width: 90%;
 
                 span {
                     color: $red-accent;
@@ -47,7 +49,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            // margin-top: 50px;
+            text-align: center;
+            width: 90%;
 
             h1 {
                 margin-bottom: 0;

@@ -1,7 +1,7 @@
 <template>
     <Login v-if="!loggedIn && !loading" @login="onLogin"/>
     <main v-if="loggedIn && !loading" class="uitgaves">
-        <h1>Uitgaves</h1>
+        <h1>Uitgaven</h1>
         <p v-if="uitgavesError.length > 0" class="error">{{ uitgavesError }}</p>
         <div class="controls">
             <button @click="uploadPopup = true"><MaterialIcon>add</MaterialIcon> Nieuwe uitgave</button>
