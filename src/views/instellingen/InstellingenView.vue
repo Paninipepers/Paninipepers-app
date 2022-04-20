@@ -1,26 +1,33 @@
 <template>
-    <div>
+    <div class="settings">
         <h1>Instellingen</h1>
         <ul>
             <li>
-            <span v-if="denied">Je hebt de notificaties geweigerd, zet ze eerst aan via het menu van de browser en probeer het dan opnieuw.</span>
-            Ontvang een notificatie zodra er een nieuwe editie verschijnt:
-            <Switch :value="enabled" @change="checkNotificationStatus"/>
+                <span v-if="denied">Je hebt de notificaties geweigerd, zet ze eerst aan via het menu van de browser en probeer het dan opnieuw.</span>
+                Ontvang een notificatie zodra er een nieuwe editie verschijnt:
+                <Switch :value="enabled" @change="checkNotificationStatus"/>
             </li>
         </ul>
+        <div class="contact">
+            <h1>Contact</h1>
+            <p>Wil jij ook iets schrijven voor de schoolkrant of heb je een vraag of opmerking? Mail dan naar: <a href="mailto:schoolkrantadc@gmail.com">schoolkrantadc@gmail.com</a></p>
+        </div>
     </div>
 </template>
 
 <style scoped lang="scss">
     @import '@/variables.scss';
 
-    div {
+    div.settings {
         display: flex;
         flex-direction: column;
         align-items: center;
+        height: calc(100vh - 120px);
+        overflow-y: scroll;
 
         ul {
             list-style: none;
+            flex-grow: 1;
             margin: 0;
 
             li {
@@ -33,6 +40,21 @@
                     color: $red-accent;
                     font-weight: bold;
                 }
+            }
+        }
+
+        div.contact {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            // margin-top: 50px;
+
+            h1 {
+                margin-bottom: 0;
+            }
+
+            a {
+                color: $orange-light;
             }
         }
     }

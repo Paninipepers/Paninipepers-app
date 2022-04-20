@@ -85,13 +85,21 @@ body {
   import * as ServiceworkerHandler from './serviceworkerHandler';
   import { User } from './user';
   import Popup from './components/Popup.vue';
+  import { Firebase } from './firebase';
 
   @Options({
     components: {
       Title,
       Nav,
       Popup
-    }
+    },
+    watch: {
+            $route: {
+                handler(from, to) {
+                  if (from === "uitgaves") Firebase.logout();     
+                }
+            }
+        }
   })
   export default class App extends Vue {
     newUpdate: boolean = false;
@@ -127,7 +135,7 @@ body {
     }
 
     get showNav() {
-      return this.$route.name === 'krant' || this.$route.name === 'settings' || this.$route.name === 'search';
+      return this.$route.name === 'krant' || this.$route.name === 'instellingen' || this.$route.name === 'archief';
     }
   }
 </script>

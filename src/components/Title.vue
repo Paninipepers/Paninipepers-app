@@ -11,10 +11,10 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+        justify-content: center;
 
         .logo {
             max-height: 80%;
-            margin-left: 10%;
             margin-right: 20px;
         }
     }

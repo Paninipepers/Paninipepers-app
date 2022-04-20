@@ -81,9 +81,7 @@ export class Firebase {
                 let headers = new Headers();
 
                 headers.append('Content-Type', 'application/json');
-                headers.append("Access-Control-Allow-Origin", "*")
-
-                console.log(requestBody);
+                headers.append("Access-Control-Allow-Origin", "*");
 
                 fetch('https://paninipepers.herokuapp.com/api/sendNotification', {
                     method: 'POST',

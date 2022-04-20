@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import KrantView from '@/views/krant/KrantView.vue';
-import SearchView from '@/views/search/SearchView.vue';
-import SettingsView from '@/views/settings/SettingsView.vue';
+import ArchiefView from '@/views/archief/ArchiefView.vue';
+import InstellingenView from '@/views/instellingen/InstellingenView.vue';
 import InstructiesView from '@/views/instructies/InstructiesView.vue';
+import UitgavesView from '@/views/uitgaves/UitgavesView.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -11,19 +12,24 @@ const routes: Array<RouteRecordRaw> = [
     component: KrantView
   },
   {
-    path: '/search',
-    name: 'search',
-    component: SearchView
+    path: '/archief',
+    name: 'archief',
+    component: ArchiefView
   },
   {
-    path: '/settings',
-    name: 'settings',
-    component: SettingsView
+    path: '/instellingen',
+    name: 'instellingen',
+    component: InstellingenView
   },
   {
     path: '/instructies',
     name: 'instructies',
     component: InstructiesView
+  },
+  {
+    path: '/uitgaves',
+    name: 'uitgaves',
+    component: UitgavesView
   }
 ];
 

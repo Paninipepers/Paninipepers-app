@@ -3,7 +3,7 @@
         <ul class="current-list">
             <li v-if="uitgaves.length > 0" class="selected">{{ current.name }}</li>
             <li v-else>Geen krant gevonden</li>
-            <li @click="zoekenPopup = true"><MaterialIcon>search</MaterialIcon>Zoeken naar meer edities</li>
+            <li @click="zoekenPopup = true"><MaterialIcon>search</MaterialIcon>Zoeken naar eerdere uitgaves</li>
         </ul>
         <PdfReader v-if="uitgaves.length > 0" :krant="current" :key="current.uid" @done="loading = false"/>
     </main>
@@ -127,8 +127,7 @@
 
                 if (this.uitgaves.length > 0) {
                     this.current = this.uitgaves[0];
-                    // this.loading = false;
-                }
+                } else this.loading = false;
             });
         }
 

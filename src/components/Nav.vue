@@ -1,8 +1,8 @@
 <template>
     <nav>
-        <router-link to="/search"><MaterialIcon>search</MaterialIcon></router-link>
+        <router-link to="/archief"><MaterialIcon>folder</MaterialIcon></router-link>
         <router-link to="/"><MaterialIcon>newspaper</MaterialIcon></router-link>
-        <router-link to="/settings"><MaterialIcon>settings</MaterialIcon></router-link>
+        <router-link to="/instellingen"><MaterialIcon>settings</MaterialIcon></router-link>
     </nav>
 </template>
 
