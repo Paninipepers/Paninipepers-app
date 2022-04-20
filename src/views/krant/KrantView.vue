@@ -34,7 +34,9 @@
             justify-content: center;
             margin-top: 0;
 
-            
+            @media (orientation: landscape) and (max-width: 600px) {
+                display: none;
+            }
 
             li {
                 display: flex;
@@ -63,11 +65,6 @@
         }
 
         .reader {
-            width: 100vw;
-            height: calc(100vh - 180px);
-            max-width: 1200px;
-            overflow-y: scroll;
-
             .vue-pdf-main {
                 width: 90%;
                 max-width: 1200px;

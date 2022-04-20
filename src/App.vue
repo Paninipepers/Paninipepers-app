@@ -26,6 +26,10 @@ body {
 
   header {
     flex: 0 1 50px;
+
+    @media (orientation: landscape) and (max-width: 600px) {
+      display: none;
+    }
   }
 
   main {

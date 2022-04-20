@@ -12,6 +12,10 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+
+        @media (orientation: landscape) and (max-width: 600px) {
+            max-height: calc(100vh - 60px);
+        }
     }
 </style>
 
