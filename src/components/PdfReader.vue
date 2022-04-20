@@ -1,6 +1,6 @@
 <template>
     <div class="reader">
-        <PdfPage v-if="loaded" v-for="page in renderPages" :key="`${krant.uid}-${page}`" :pdf="pdf" :page="page"/>
+        <PdfPage v-if="loaded" v-for="page in renderPages" :key="`${krant.uid}-${page}`" :pdf="pdf" :page="page" @rendered="checkCompletion"/>
     </div>
 </template>
 
@@ -29,7 +29,8 @@
         },
         props: {
             krant: Krant
-        }
+        },
+        emits: ["done"]
     })
     export default class PdfReader extends Vue {
         krant!: Krant;
@@ -45,6 +46,12 @@
 
         get renderPages() {
             return this.krant.pages.length > 0 ? this.krant.pages : Array.from({length: this.pdf.numPages}, (_, i) => i + 1);
+        }
+
+        checkCompletion(page: number) {
+            if (this.renderPages.indexOf(page) === this.renderPages.length - 1) {
+                this.$emit("done");
+            }
         }
     }
 </script>

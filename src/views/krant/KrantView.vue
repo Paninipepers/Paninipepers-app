@@ -5,7 +5,7 @@
             <li v-else>Geen krant gevonden</li>
             <li @click="zoekenPopup = true"><MaterialIcon>search</MaterialIcon>Zoeken naar meer edities</li>
         </ul>
-        <PdfReader v-if="uitgaves.length > 0 && !loading" :krant="current" :key="current.uid"/>
+        <PdfReader v-if="uitgaves.length > 0" :krant="current" :key="current.uid" @done="loading = false"/>
     </main>
     <Popup v-if="zoekenPopup" :title="'Kranten zoeken'" @close="zoekenPopup = false">
         <KrantFilterList :uitgaves="uitgaves" :current="current" @choose="currentFromUid"/>
@@ -130,7 +130,7 @@
 
                 if (this.uitgaves.length > 0) {
                     this.current = this.uitgaves[0];
-                    this.loading = false;
+                    // this.loading = false;
                 }
             });
         }
@@ -143,7 +143,7 @@
             this.zoekenPopup = false;
             this.loading = true;
             this.current = current;
-            this.loading = false;
+            // this.loading = false;
         }
     }
 </script>

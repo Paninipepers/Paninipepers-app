@@ -48,7 +48,7 @@
                 viewport: scaledViewport
             }).promise;
 
-            this.$emit("rendered");
+            this.$emit("rendered", this.page);
         }
     }
 </script>
