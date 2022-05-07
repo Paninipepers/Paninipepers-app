@@ -135,7 +135,7 @@ body {
     }
 
     get showNav() {
-      return this.$route.name === 'krant' || this.$route.name === 'instellingen' || this.$route.name === 'archief';
+      return this.$route.name !== 'uitgaven';
     }
   }
 </script>

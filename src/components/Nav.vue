@@ -1,6 +1,6 @@
 <template>
     <nav>
-        <router-link to="/archief"><MaterialIcon>folder</MaterialIcon></router-link>
+        <router-link to="/instructies"><MaterialIcon>help</MaterialIcon></router-link>
         <router-link to="/"><MaterialIcon>newspaper</MaterialIcon></router-link>
         <router-link to="/instellingen"><MaterialIcon>settings</MaterialIcon></router-link>
     </nav>
@@ -47,9 +47,5 @@
             MaterialIcon,
         }
     })
-    export default class Nav extends Vue {
-        select(tab: Tab) {
-
-        }
-    }
+    export default class Nav extends Vue {}
 </script>

@@ -59,7 +59,7 @@
         }
 
         div.instructie {
-            height: calc(100vh - 170px);
+            height: calc(100vh - 235px);
             overflow-y: scroll;
 
             a {
