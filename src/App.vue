@@ -1,6 +1,10 @@
 <template>
   <Title/>
-  <router-view/>
+  <router-view v-slot="{ Component }">
+    <keep-alive>
+      <component :is="Component" />
+    </keep-alive>
+  </router-view>
   <Nav v-if="showNav"/>
   <div v-if="newUpdate" id="update-info">Update installeren</div>
   <div v-if="firstVisit" id="first-visit">
