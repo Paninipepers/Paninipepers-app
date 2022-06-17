@@ -1,6 +1,6 @@
 <template>
     <div class="reader">
-        <PdfPage v-if="loaded" v-for="page in renderPages" :key="`${krant.uid}-${page}`" :pdf="pdf" :page="page" @rendered="checkCompletion"/>
+        <PdfPage v-if="loaded" v-for="page in renderPages" :key="`${krant.uid}-${page}`" :pdf="pdf" :page="page"/>
     </div>
 </template>
 
@@ -46,16 +46,11 @@
 
             this.pdf = await pdfjsLib.getDocument(this.krant.url).promise;
             this.loaded = true;
+            this.$emit("done");
         }
 
         get renderPages() {
             return this.krant.pages.length > 0 ? this.krant.pages : Array.from({length: this.pdf.numPages}, (_, i) => i + 1);
-        }
-
-        checkCompletion(page: number) {
-            if (this.renderPages.indexOf(page) === this.renderPages.length - 1) {
-                this.$emit("done");
-            }
         }
     }
 </script>

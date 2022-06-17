@@ -1,4 +1,4 @@
-const version = "2.3.4";
+const version = "2.4.0";
 const cacheName =  `paninipepers-cache-v${version}`;
 const assets = self.__WB_MANIFEST;
 

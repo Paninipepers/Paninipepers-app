@@ -4,12 +4,12 @@
 
 <style scoped lang="scss">
     canvas {
-        width: 90%;
+        width: 90vw;
         max-width: 1200px;
         box-shadow: 0px 0px 10px -2px rgba(0,0,0,0.75);
         margin-top: 10px;
         margin-bottom: 10px;
-        border-radius: 10px;
+        border-radius: 2%;
     }
 </style>
 
@@ -18,7 +18,6 @@
     import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.js";
 
     @Options({
-        emits: ["rendered"],
         props: {
             pdf: Object,
             page: Number
@@ -32,23 +31,34 @@
             target: HTMLCanvasElement
         };
 
-        async mounted() {
+        mounted() {
+            let observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        this.renderPage();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                root: null,
+                rootMargin: "0px",
+                threshold: 0.01
+            });
+
+            observer.observe(this.$refs.target);
+        }
+
+        async renderPage() {
             let page = await this.pdf.getPage(this.page);
-            let viewport = page.getViewport({ scale: 1 });
+            let viewport = page.getViewport({ scale: 2 });
 
-            this.$refs.target.width = (innerWidth > innerHeight ? innerWidth : innerHeight) * 0.95;
-            let scale = this.$refs.target.width / viewport.width;
-            scale = scale < 1 ? 1 : scale;
-            let scaledViewport = page.getViewport({ scale });
-
-            this.$refs.target.height = scaledViewport.height;
+            this.$refs.target.width = viewport.width;
+            this.$refs.target.height = viewport.height;
 
             await page.render({
                 canvasContext: this.$refs.target.getContext("2d")!,
-                viewport: scaledViewport
+                viewport
             }).promise;
-
-            this.$emit("rendered", this.page);
         }
     }
 </script>

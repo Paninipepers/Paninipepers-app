@@ -131,7 +131,7 @@
             });
         }
 
-        async currentFromUid(uid: string) {
+        currentFromUid(uid: string) {
             let current = this.uitgaves.find(uitgave => uitgave.uid === uid);
 
             if (!current) return;
@@ -139,7 +139,6 @@
             this.zoekenPopup = false;
             this.loading = true;
             this.current = current;
-            // this.loading = false;
         }
     }
 </script>
