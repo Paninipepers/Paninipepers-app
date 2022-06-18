@@ -33,6 +33,7 @@
             align-items: center;
             justify-content: center;
             margin-top: 0;
+            padding: 0;
 
             @media (orientation: landscape) and (max-width: 600px) {
                 display: none;
