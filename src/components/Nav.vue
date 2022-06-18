@@ -21,10 +21,18 @@
         box-shadow: 0px 0px 10px -2px rgba(0,0,0,0.75);
         background-color: white;
 
+        @media (prefers-color-scheme: dark) {
+            background-color: #0c0e11;
+        }
+
         .material-icons {
-           cursor: pointer;
-           font-size: 2em;
-           color: black;
+            cursor: pointer;
+            font-size: 2em;
+            color: black;
+
+            @media (prefers-color-scheme: dark) {
+                color: white;
+            }
         }
 
         .router-link-exact-active .material-icons {
@@ -39,8 +47,6 @@
 <script lang="ts">
     import { Options, Vue } from 'vue-class-component';
     import MaterialIcon from './MaterialIcon.vue';
-
-    type Tab = 'search' | 'newspaper' | 'settings';
 
     @Options({
         components: {

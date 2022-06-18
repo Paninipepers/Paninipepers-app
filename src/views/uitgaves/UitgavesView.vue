@@ -44,6 +44,10 @@
         flex-direction: column;
         align-items: center;
 
+        @media (prefers-color-scheme: dark) {
+            color: white;
+        }
+
         button {
             border: none;
             background-color: $orange-base;
@@ -80,6 +84,10 @@
 
             li:not(:last-child) {
                 border-bottom: 2px solid black;
+
+                @media (prefers-color-scheme: dark) {
+                    border-color: $orange-light;
+                }
             }
 
             li.selected {

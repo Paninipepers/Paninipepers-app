@@ -17,6 +17,10 @@
         flex-direction: column;
         align-items: center;
 
+        @media (prefers-color-scheme: dark) {
+            color: white;
+        }
+
         input, button {
             margin-bottom: 25px;
             text-align: center;

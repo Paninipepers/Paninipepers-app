@@ -25,6 +25,10 @@
         height: calc(100vh - 120px);
         overflow-y: scroll;
 
+        @media (prefers-color-scheme: dark) {
+            color: white;
+        }
+
         ul {
             list-style: none;
             flex-grow: 1;

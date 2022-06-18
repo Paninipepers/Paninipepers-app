@@ -39,6 +39,11 @@
         border-radius: 50px;
         z-index: 2;
         background-color: white;
+
+        @media (prefers-color-scheme: dark) {
+            color: white;
+            background-color: #0c0e11;
+        }
     }
 
     span.close {

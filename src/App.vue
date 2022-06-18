@@ -20,6 +20,10 @@
 body {
   margin: 0;
   overflow: hidden;
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #1e2025;
+  }
 }
 
 #app {
